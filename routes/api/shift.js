@@ -34,13 +34,51 @@ router.get('/all', passport.authenticate('jwt', { session: false }), (req, res) 
 // @desc    Create a new shift and clock in with a description
 // @access  Private
 router.post('/clockIn', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const clockInFields = {};
-  clockInFields.user = req.user.id;
-  if (req.body.clockInDesc) clockInFields.clockInDesc = req.body.clockInDesc;
+  const shiftFields = {};
+  shiftFields.user = req.user.id;
+  if (req.body.clockInDesc) shiftFields.clockInDesc = req.body.clockInDesc;
 
-  new Shift(clockInFields).save()
+  new Shift(shiftFields).save()
     .then(shift => res.json(shift))
     .catch(err => res.status(404).json(err));
+});
+
+// @route   POST api/shift/clockOut/:shiftId
+// @desc    Clock out of shift with param shiftId
+// @access  Private
+router.post('/clockOut/:shiftId', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  const currentTime = Date.now();
+  const shiftFields = {};
+  if (req.body.clockOutDesc) shiftFields.clockOutDesc = req.body.clockOutDesc;
+  shiftFields.clockOut = currentTime;
+
+  Shift.findOneAndUpdate(
+    { _id: req.params.shiftId },
+    { $set: shiftFields },
+    { new: true }
+  )
+    .then(shift => res.json(shift))
+    .catch(err => res.status(404).json(err));
+
+});
+
+// @route   POST api/shift/clockOut/:shiftId
+// @desc    Clock out of shift with param shiftId
+// @access  Private
+router.post('/delete/:shiftId', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  const errors = {};
+  Shift.findOneAndDelete({ _id: req.params.shiftId })
+    .then(shift => {
+      if (!shift) {
+        errors.noShift = 'There is no shift for this user';
+        return res.status(400).json(errors);
+      }
+      return res.json()
+    })
+    .catch(err => res.status(404).json(err));
+
 });
 
 
