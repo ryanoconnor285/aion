@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Time keeping app for clocking in and out of work or school",
   "main": "index.js",
+  "engines": {
+    "yarn": "1.13"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "heroku-postbuild": "yarn build --prefix client"
   },
   "author": "Ryan O'Connor",
   "license": "ISC",
