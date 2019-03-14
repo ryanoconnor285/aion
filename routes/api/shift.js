@@ -14,6 +14,22 @@ const User = require('../../models/User');
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Shift Works' }));
 
+// @route   GET api/shift/find/:shiftId
+// @desc    Find a shift by shift _id
+// @access  Private
+router.get('/find/:shiftId', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const errors = {};
+  Shift.findOne({ _id: req.params.shiftId })
+    .then(shifts => {
+      if (!shifts) {
+        errors.noShift = 'There was no shift found';
+        return res.status(400).json(errors);
+      }
+      res.json(shifts);
+    })
+    .catch(err => res.status(404).json(err));
+});
+
 // @route   GET api/shift/all
 // @desc    Get current user's shifts
 // @access  Private
@@ -63,7 +79,30 @@ router.post('/clockOut/:shiftId', passport.authenticate('jwt', { session: false 
 
 });
 
-// @route   POST api/shift/clockOut/:shiftId
+// @route   POST api/shift/edit/:shiftId
+// @desc    Clock out of shift with param shiftId
+// @access  Private
+router.post('/edit/:shiftId', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  const errors = {};
+  const shiftFields = {};
+  if (req.body.clockInDesc) shiftFields.clockInDesc = req.body.clockInDesc;
+  if (req.body.clockIn) shiftFields.clockIn = req.body.clockIn;
+  if (req.body.clockOutDesc) shiftFields.clockOutDesc = req.body.clockOutDesc;
+  if (req.body.clockOut) shiftFields.clockOut = req.body.clockOut;
+  Shift.findByIdAndUpdate({ _id: req.params.shiftId })
+    .then(shift => {
+      if (!shift) {
+        errors.noShift = 'There is no shift for this user';
+        return res.status(400).json(errors);
+      }
+      return res.json()
+    })
+    .catch(err => res.status(404).json(err));
+
+});
+
+// @route   POST api/shift/delete/:shiftId
 // @desc    Clock out of shift with param shiftId
 // @access  Private
 router.post('/delete/:shiftId', passport.authenticate('jwt', { session: false }), (req, res) => {
