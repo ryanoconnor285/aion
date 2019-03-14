@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --prefix client && yarn build --prefix client"
+    "heroku-postbuild": "YARN_PRODUCTION=false yarn --prefix client && yarn build --prefix client"
   },
   "author": "Ryan O'Connor",
   "license": "ISC",
