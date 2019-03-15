@@ -1,61 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ShiftItem from './shifts/ShiftItem';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { connect } from 'react-redux';
+import { getShifts } from '../../../actions/shiftActions';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-});
+class Dashboard extends Component {
+  componentDidMount() {
+    this.props.getShifts();
+  }
 
-class Dashboard extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { workShift } = this.props;
+
     return (
-      <div className={classes.root}>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Expansion Panel 1</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
-          </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Expansion Panel 2</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
-          </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel disabled>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Disabled Expansion Panel</Typography>
-          </ExpansionPanelSummary>
-        </ExpansionPanel>
+      <div className="dashboard">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="display-4">Dashboard</h1>
+              {workShift.workShifts.map(workShift => <ShiftItem key={workShift._id} workShifts={workShift} />)}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  workShift: PropTypes.object.isRequired,
+  getShifts: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+const mapStateToProps = state => ({
+  auth: state.auth,
+  workShift: state.workShift
+});
+
+export default connect(mapStateToProps, { getShifts })(
+  Dashboard
+);
