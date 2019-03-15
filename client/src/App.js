@@ -9,7 +9,7 @@ import store from './store';
 
 import PrivateRoute from './components/common/PrivateRoute';
 
-import AppBar from './components/layout/navigation/AppBar';
+import Navbar from './components/layout/navigation/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Landing from './components/layout/content/Landing';
@@ -42,7 +42,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <AppBar />
+            <Navbar />
             <Route exact path="/" component={Landing} />
             <div className="container">
               <Route exact path="/register" component={Register} />
