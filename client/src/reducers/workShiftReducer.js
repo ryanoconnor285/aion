@@ -1,6 +1,8 @@
 import {
   GET_WORK_SHIFTS,
-  WORK_SHIFT_LOADING
+  WORK_SHIFT_LOADING,
+  CLOCK_IN,
+  CLOCK_OUT
 } from '../actions/types';
 
 const initialState = {
@@ -22,7 +24,17 @@ export default function (state = initialState, action) {
         workShifts: action.payload,
         loading: false
       };
+    case CLOCK_IN:
+      return {
+        ...state,
+        workShifts: [action.payload, ...state.workShifts]
+      };
+    case CLOCK_OUT:
+      return {
+        ...state,
+        workShifts: [action.payload, ...state.workShifts]
+      };
     default:
       return state;
   }
-}
+};
