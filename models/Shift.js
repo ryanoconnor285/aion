@@ -19,7 +19,8 @@ const ShiftSchema = new Schema({
     type: String
   },
   clockOut: {
-    type: Date
+    type: Date,
+    default: null
   }
 });
 
