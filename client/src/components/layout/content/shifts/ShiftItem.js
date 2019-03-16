@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { clockOut } from '../../../../actions/shiftActions';
 import Button from '@material-ui/core/Button';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
 class ShiftItem extends React.Component {
   constructor() {
@@ -16,33 +19,37 @@ class ShiftItem extends React.Component {
 
     const clockOutData = {
       clockOutDesc: this.state.clockOutDesc,
-      id: e.target.id
+      id: this.props.id
     };
     console.log(clockOutData);
     this.props.clockOut(clockOutData);
     this.setState({ clockInDesc: '' });
   }
+
   render() {
     const { workShifts } = this.props;
     return(
-      <div>
-        <h3>Shift Item</h3>
-        <h5>{workShifts.user}</h5>
-        <h5>{workShifts.clockIn}</h5>
-        <h5>{workShifts.clockInDesc}</h5>
-        <h5>{workShifts.clockOut ? workShifts.clockOut : <Button onClick={this.handleClockOut}>Clock Out</Button>}</h5>
-        <h5>{workShifts.clockOutDesc}</h5>
-      </div>
+      <TableRow key={workShifts.id}>
+        <TableCell>{workShifts.clockIn}</TableCell>
+        <TableCell>{workShifts.clockInDesc}</TableCell>
+        <TableCell>{workShifts.clockOut ? workShifts.clockOut : <Button onClick={this.handleClockOut}>Clock Out</Button>}</TableCell>
+        <TableCell>{workShifts.clockOutDesc}</TableCell>
+      </TableRow>
     )
   }
 }
 
 ShiftItem.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  workShift: PropTypes.object.isRequired,
+  clockOut: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors,
+  workShift: state.workShift
 });
 
-export default connect(mapStateToProps, {})(ShiftItem);
+export default connect(mapStateToProps, {clockOut})(ShiftItem);

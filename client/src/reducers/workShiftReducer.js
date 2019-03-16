@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
     case CLOCK_OUT:
       return {
         ...state,
-        workShifts: [action.payload, ...state.workShifts]
+        workShift: action.payload
       };
     default:
       return state;

@@ -35,7 +35,7 @@ router.get('/find/:shiftId', passport.authenticate('jwt', { session: false }), (
 // @access  Private
 router.get('/all', passport.authenticate('jwt', { session: false }), (req, res) => {
   const errors = {};
-  Shift.find({ user: req.user.id })
+  Shift.find({ user: req.user.id }).limit(5).sort({ $natural: -1 })
     .then(shifts => {
       if (!shifts) {
         errors.shifts = 'There are no shifts for this user';

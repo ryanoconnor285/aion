@@ -30,7 +30,7 @@ class Landing extends React.Component {
             alt="Contemplative Reptile"
             className={classes.media}
             height="140"
-            image="/static/images/cards/contemplative-reptile.jpg"
+            image="https://images.pexels.com/photos/584165/pexels-photo-584165.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
             title="Contemplative Reptile"
           />
           <CardContent>
