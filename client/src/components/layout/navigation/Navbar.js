@@ -41,7 +41,10 @@ class Navbar extends React.Component {
     );
 
     const guestLinks = (
-      <Button color="inherit" component={Link} to="/login">Login</Button>
+      <div>
+        <Button color="inherit" component={Link} to="/login">Login</Button>
+        <Button color="inherit" component={Link} to="/register">Register</Button>
+      </div>
     );
 
     return (
@@ -50,7 +53,7 @@ class Navbar extends React.Component {
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Aion
-          </Typography>
+            </Typography>
             {isAuthenticated ? authLinks : guestLinks}
           </Toolbar>
         </AppBar>
