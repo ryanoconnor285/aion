@@ -6,7 +6,7 @@ import {
   CLOCK_IN, CLOCK_OUT, 
   GET_ERRORS, 
   CLEAR_ERRORS, 
-  GET_CURRENT_SHIFT 
+  GET_OPEN_SHIFTS 
 } from './types';
 
 // Clock In
@@ -66,18 +66,18 @@ export const getShifts = () => dispatch => {
 }
 
 // Get any open shifts where clockOut is null
-export const getCurrentShift = () => dispatch => {
+export const getOpenShifts = () => dispatch => {
   dispatch(setShiftLoading());
-  axios.get('api/shift/findCurrent')
+  axios.get('api/shift/findOpen')
     .then(res =>
       dispatch({
-        type: GET_CURRENT_SHIFT,
+        type: GET_OPEN_SHIFTS,
         payload: res.data
       })
     )
     .catch(err =>
       dispatch({
-        type: GET_CURRENT_SHIFT,
+        type: GET_OPEN_SHIFTS,
         payload: null
       })
     );
