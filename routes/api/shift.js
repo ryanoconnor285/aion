@@ -30,10 +30,10 @@ router.get('/find/:shiftId', passport.authenticate('jwt', { session: false }), (
     .catch(err => res.status(404).json(err));
 });
 
-// @route   GET api/shift/findCurrent
-// @desc    Find any shifts current shift where clockOut will be null
+// @route   GET api/shift/findOpen
+// @desc    Find any shifts open shift where clockOut will be null
 // @access  Private
-router.get('/findCurrent', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/findOpen', passport.authenticate('jwt', { session: false }), (req, res) => {
   Shift.find({ clockOut: null })
     .then(shifts => {
       if (!shifts) {
