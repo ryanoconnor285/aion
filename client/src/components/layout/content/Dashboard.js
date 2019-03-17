@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ShiftItem from './shifts/ShiftItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getShifts, clockIn } from '../../../actions/shiftActions';
+import { getShifts, clockIn, getCurrentShift } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -39,8 +39,13 @@ class Dashboard extends Component {
     this.state = {
       clockInDesc: '',
       clockOutDesc: '',
+      currentShift: '',
       errors: {}
     }
+  }
+
+  componentDidMount(){
+    this.props.getCurrentShift();
   }
 
   componentWillReceiveProps(newProps) {
@@ -82,7 +87,7 @@ class Dashboard extends Component {
             item 
             xs={12} md={6}
             container
-            direction="row-reverse"
+            direction="row"
             justify="center"
             alignItems="flex-start"
           >
@@ -90,11 +95,11 @@ class Dashboard extends Component {
               <form className={classes.container} noValidate autoComplete="off">
                 <Grid item xs={12}>
                   <TextField
-                    id="clockInDesc"
+                    id={workShift.currentShift ? workShift.currentShift._id : "clockInDesc"}
                     name="clockInDesc"
                     label="Description"
                     value={this.state.clockInDesc}
-                    placeholder="Clock in description"
+                    placeholder={workShift.currentShift ? "Clock out description" : "Clock in description"}
                     className={classes.textField}
                     margin="normal"
                     onChange={this.onChange}
@@ -118,7 +123,7 @@ class Dashboard extends Component {
               </form>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <Paper className={classes.paper}>
               <Button
                 variant="contained"
@@ -157,6 +162,7 @@ Dashboard.propTypes = {
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   getShifts: PropTypes.func.isRequired,
+  getCurrentShift: PropTypes.func.isRequired,
   clockIn: PropTypes.func.isRequired
   
 };
@@ -167,4 +173,4 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { getShifts, clockIn })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getShifts, getCurrentShift, clockIn })(withStyles(styles)(Dashboard));
