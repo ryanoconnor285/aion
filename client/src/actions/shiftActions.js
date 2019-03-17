@@ -83,9 +83,6 @@ export const getCurrentShift = () => dispatch => {
     );
 }
 
-
-
-
 // Set loading state
 export const setShiftLoading = () => {
   return {
