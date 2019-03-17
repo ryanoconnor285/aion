@@ -12,6 +12,8 @@
 # production
 /client/build
 
+/seed
+
 # misc
 .DS_Store
 .env.local
