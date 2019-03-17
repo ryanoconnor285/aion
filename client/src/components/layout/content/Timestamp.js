@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentShift, getShifts, clockIn, clockOut } from '../../../actions/shiftActions';
+import { getOpenShifts, getShifts, clockIn, clockOut } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import LinearQuery from '../../common/LinearQuery';
 import Button from '@material-ui/core/Button';
@@ -39,12 +39,11 @@ class Timestamp extends React.Component {
   }
 
   componentDidMount(){
-    this.props.getCurrentShift();
+    this.props.getOpenShifts();
   }
 
   handleClockIn = (e) => {
     e.preventDefault();
-
     const newWorkShift = {
       clockInDesc: this.state.clockInDesc
     };
@@ -59,13 +58,15 @@ class Timestamp extends React.Component {
   }
 
   render(){
-    const { workShift, classes, loading } = this.props;
+    const { workShift, classes } = this.props;
     let timeStampContent;
 
-    if ( loading ) {
+    if ( workShift.loading ) {
       timeStampContent = <LinearQuery />;
+    } else if (workShift.currentShift){
+      timeStampContent = workShift.currentShift.map(shift => <h5 key={shift._id}>{shift._id}</h5>);
     } else {
-      timeStampContent = <h1>Hello</h1>;
+      timeStampContent = null;
     }
 
     return(
@@ -81,11 +82,11 @@ class Timestamp extends React.Component {
           <form className={classes.container} noValidate autoComplete="off">
             <Grid item xs={12}>
               <TextField
-                id={workShift.currentShift ? "clockOutDesc" : "clockInDesc"}
+                id="clockInDesc"
                 name="clockInDesc"
                 label="Description"
                 value={this.state.clockInDesc}
-                placeholder={workShift.currentShift ? "Clock out description" : "Clock in description"}
+                placeholder="Clock in description"
                 className={classes.textField}
                 margin="normal"
                 onChange={this.onChange}
@@ -101,9 +102,10 @@ class Timestamp extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                fullWidth
                 onClick={this.handleClockIn}
               >
-                {workShift.currentShift ? "Clock Out" : "Clock In"}
+                Clock In
               </Button>
             </Grid>
           </form>
@@ -116,7 +118,7 @@ Timestamp.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
-  getCurrentShift: PropTypes.func.isRequired,
+  getOpenShifts: PropTypes.func.isRequired,
   getShifts: PropTypes.func.isRequired,
   clockIn: PropTypes.func.isRequired
 };
@@ -128,4 +130,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { getCurrentShift, getShifts, clockIn, clockOut })(withStyles(styles)(Timestamp));
+export default connect(mapStateToProps, { getOpenShifts, getShifts, clockIn, clockOut })(withStyles(styles)(Timestamp));
