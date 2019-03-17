@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-import { GET_WORK_SHIFTS, WORK_SHIFT_LOADING, CLOCK_IN, CLOCK_OUT, GET_ERRORS, CLEAR_ERRORS } from './types';
+import { 
+  GET_WORK_SHIFTS, 
+  WORK_SHIFT_LOADING, 
+  CLOCK_IN, CLOCK_OUT, 
+  GET_ERRORS, 
+  CLEAR_ERRORS, 
+  GET_CURRENT_SHIFT 
+} from './types';
 
 // Clock In
 export const clockIn = newWorkShift => dispatch => {
@@ -57,6 +64,27 @@ export const getShifts = () => dispatch => {
       })
     );
 }
+
+// Get any open shifts where clockOut is null
+export const getCurrentShift = () => dispatch => {
+  dispatch(setShiftLoading());
+  axios.get('api/shift/findCurrent')
+    .then(res =>
+      dispatch({
+        type: GET_CURRENT_SHIFT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_CURRENT_SHIFT,
+        payload: null
+      })
+    );
+}
+
+
+
 
 // Set loading state
 export const setShiftLoading = () => {
