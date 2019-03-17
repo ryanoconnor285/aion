@@ -2,59 +2,54 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
-    maxWidth: 345,
+    minWidth: 275,
   },
-  media: {
-    // ⚠️ object-fit is not supported by IE 11.
-    objectFit: 'cover',
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
   },
 };
 
 class Landing extends React.Component {
   render() {
     const { classes } = this.props;
+    const bull = <span className={classes.bullet}>•</span>;
+
     return (
       <Card className={classes.card}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            className={classes.media}
-            height="140"
-            image="https://images.pexels.com/photos/584165/pexels-photo-584165.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Lizard
-            </Typography>
-            <Typography component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-              across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            Aion (Greek: Αἰών)
+        </Typography>
+          <Typography variant="h5" component="h2">
+            A
+          {bull}
+            ion
+        </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            (deity)
+        </Typography>
+          <Typography component="p">
+             is a Hellenistic deity associated with time, the orb or circle encompassing the universe, and the zodiac. The "time" represented by Aion is unbounded, in contrast to Chronos as empirical time divided into past, present, and future. ... In Latin the concept of the deity may appear as Aevum or Saeculum.
+          <br />
+            {'"a benevolent smile"'}
+          </Typography>
+        </CardContent>
       </Card>
     );
   }
-  
 }
 
 Landing.propTypes = {
