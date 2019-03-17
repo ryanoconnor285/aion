@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import ShiftItem from './shifts/ShiftItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getShifts } from '../../../actions/shiftActions';
+import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
-import LinearQuery from '../../common/LinearQuery';
 import Timestamp from './Timestamp';
+import OpenShifts from './shifts/OpenShifts';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -32,6 +32,14 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
 });
 
 class Dashboard extends Component {
@@ -42,6 +50,10 @@ class Dashboard extends Component {
       clockOutDesc: '',
       errors: {}
     }
+  }
+
+  componentDidMount() {
+    this.props.getOpenShifts();
   }
 
   componentWillReceiveProps(newProps) {
@@ -55,23 +67,29 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { workShift, classes, loading } = this.props;
+    const { workShift, classes } = this.props;
     let timeTableContent;
-
-    if (loading) {
-      timeTableContent = <LinearQuery />;
+    let openShiftList;
+    if (workShift.loading) {
+      timeTableContent = null;
     } else {
       timeTableContent = workShift.workShifts.map(workShift => <ShiftItem key={workShift._id} id={workShift._id} workShifts={workShift} />);
+    }
+
+    if (workShift.openShifts) {
+      openShiftList = <OpenShifts openShifts={workShift.openShifts} />;
+    } else {
+      openShiftList = null;
     }
 
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <h1 className="display-4">Dashboard</h1>
+            {openShiftList}
           </Grid>
           <Timestamp />
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <Paper className={classes.paper}>
               <Button
                 variant="contained"
@@ -85,10 +103,10 @@ class Dashboard extends Component {
               <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date In</TableCell>
                     <TableCell>Clock In</TableCell>
-                    <TableCell>Date Out</TableCell>
+                    <TableCell>Description</TableCell>
                     <TableCell>Clock Out</TableCell>
+                    <TableCell>Description</TableCell>
                     <TableCell>Duration</TableCell>
                   </TableRow>
                 </TableHead>
@@ -108,7 +126,8 @@ Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
-  getShifts: PropTypes.func.isRequired
+  getShifts: PropTypes.func.isRequired,
+  getOpenShifts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -117,4 +136,4 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { getShifts })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getShifts, getOpenShifts })(withStyles(styles)(Dashboard));
