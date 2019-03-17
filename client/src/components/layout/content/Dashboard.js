@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import ShiftItem from './shifts/ShiftItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getShifts, clockIn, getCurrentShift } from '../../../actions/shiftActions';
+import { getShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
+import LinearQuery from '../../common/LinearQuery';
+import Timestamp from './Timestamp';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -39,13 +40,8 @@ class Dashboard extends Component {
     this.state = {
       clockInDesc: '',
       clockOutDesc: '',
-      currentShift: '',
       errors: {}
     }
-  }
-
-  componentDidMount(){
-    this.props.getCurrentShift();
   }
 
   componentWillReceiveProps(newProps) {
@@ -58,24 +54,15 @@ class Dashboard extends Component {
     this.props.getShifts();
   }
 
-  handleClockIn = (e) => {
-    e.preventDefault();
-
-    const newWorkShift = {
-      clockInDesc: this.state.clockInDesc
-    };
-
-    this.props.clockIn(newWorkShift);
-    this.setState({ clockInDesc: '' });
-    this.props.getShifts();
-  }
-
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
   render() {
-    const { workShift, classes } = this.props;
+    const { workShift, classes, loading } = this.props;
+    let timeTableContent;
+
+    if (loading) {
+      timeTableContent = <LinearQuery />;
+    } else {
+      timeTableContent = workShift.workShifts.map(workShift => <ShiftItem key={workShift._id} id={workShift._id} workShifts={workShift} />);
+    }
 
     return (
       <div className={classes.root}>
@@ -83,46 +70,7 @@ class Dashboard extends Component {
           <Grid item xs={12}>
             <h1 className="display-4">Dashboard</h1>
           </Grid>
-          <Grid 
-            item 
-            xs={12} md={6}
-            container
-            direction="row"
-            justify="center"
-            alignItems="flex-start"
-          >
-            <Paper className={classes.paper}>
-              <form className={classes.container} noValidate autoComplete="off">
-                <Grid item xs={12}>
-                  <TextField
-                    id={workShift.currentShift ? workShift.currentShift._id : "clockInDesc"}
-                    name="clockInDesc"
-                    label="Description"
-                    value={this.state.clockInDesc}
-                    placeholder={workShift.currentShift ? "Clock out description" : "Clock in description"}
-                    className={classes.textField}
-                    margin="normal"
-                    onChange={this.onChange}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <Button 
-                    variant="contained" 
-                    color="primary" 
-                    className={classes.button} 
-                    onClick={this.handleClockIn} 
-                  >
-                    Clock In
-                  </Button>
-                </Grid> 
-              </form>
-            </Paper>
-          </Grid>
+          <Timestamp />
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <Button
@@ -145,8 +93,7 @@ class Dashboard extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-
-                  {workShift.workShifts.map(workShift => <ShiftItem key={workShift._id} id={workShift._id} workShifts={workShift} />)}
+                  {timeTableContent}
                 </TableBody>
               </Table>
             </Paper>
@@ -161,10 +108,7 @@ Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
-  getShifts: PropTypes.func.isRequired,
-  getCurrentShift: PropTypes.func.isRequired,
-  clockIn: PropTypes.func.isRequired
-  
+  getShifts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -173,4 +117,4 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { getShifts, getCurrentShift, clockIn })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getShifts })(withStyles(styles)(Dashboard));
