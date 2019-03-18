@@ -5,22 +5,18 @@ import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { Paper, Button, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core';
 
 
 const styles = theme => ({
-  table: {
-    minWidth: 375,
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
   },
-  tableRow: {
-    margin: 0,
-    padding: 0
-  }
+  table: {
+    minWidth: 700,
+  },
 });
 
 class RecentShifts extends React.Component {
@@ -45,7 +41,7 @@ class RecentShifts extends React.Component {
     const { workShifts, classes } = this.props;
     const dateFormat = "MM/DD HH:mm";
     const workShift = workShifts.map(workshift =>
-      <TableRow class={classes.tableRow} key={workshift._id} id={workshift._id}>
+      <TableRow className={classes.tableRow} key={workshift._id} id={workshift._id}>
         <TableCell>
           <Moment format={dateFormat}>
             {workshift.clockIn}
@@ -81,20 +77,22 @@ class RecentShifts extends React.Component {
     )
 
     return (
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Clock In</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Clock Out</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Duration</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {workShift}
-        </TableBody>
-      </Table>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Clock In</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Clock Out</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Duration</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {workShift}
+          </TableBody>
+        </Table>
+      </Paper>
     )
   }
 }
@@ -103,6 +101,7 @@ RecentShifts.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
   clockOut: PropTypes.func.isRequired,
   getOpenShifts: PropTypes.func.isRequired
 };
