@@ -7,10 +7,7 @@ import isEmpty from '../../../validation/isEmpty';
 import Timestamp from './Timestamp';
 import RecentShifts from './tables/RecentShifts';
 import OpenShifts from './shifts/OpenShifts';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
+import { Button, Grid, Paper } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
