@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { clockOut } from '../../../../actions/shiftActions';
-import SimpleModal from '../../../common/SimpleModal';
 import Moment from 'react-moment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
