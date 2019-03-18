@@ -1,44 +1,25 @@
 import React, { Component } from 'react';
-import ShiftItem from './shifts/ShiftItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
+import isEmpty from '../../../validation/isEmpty';
 import Timestamp from './Timestamp';
+import RecentShifts from './tables/RecentShifts';
 import OpenShifts from './shifts/OpenShifts';
 import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
   root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
+    flexGrow: 1,
   },
-  table: {
-    minWidth: 700,
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
 });
 
@@ -48,6 +29,8 @@ class Dashboard extends Component {
     this.state = {
       clockInDesc: '',
       clockOutDesc: '',
+      openShifts: '',
+      isAuthenticated: '',
       errors: {}
     }
   }
@@ -60,6 +43,12 @@ class Dashboard extends Component {
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
     }
+    if (newProps.auth) {
+      this.setState({ isAuthenticated: newProps.openShifts });
+    }
+    if (newProps.workShift.openShifts) {
+      this.setState({ openShifts: newProps.openShifts });
+    }
   }
 
   handleGetShifts = () => {
@@ -68,52 +57,30 @@ class Dashboard extends Component {
 
   render() {
     const { workShift, classes } = this.props;
-    let timeTableContent;
-    let openShiftList;
-    if (workShift.loading) {
-      timeTableContent = null;
-    } else {
-      timeTableContent = workShift.workShifts.map(workShift => <ShiftItem key={workShift._id} id={workShift._id} workShifts={workShift} />);
-    }
-
-    if (workShift.openShifts) {
-      openShiftList = <OpenShifts openShifts={workShift.openShifts} />;
-    } else {
-      openShiftList = null;
-    }
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={8}>
+        <Grid container spacing={24}>
           <Grid item xs={12}>
-            {openShiftList}
-          </Grid>
-          <Timestamp />
-          <Grid item xs={10}>
             <Paper className={classes.paper}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={this.handleGetShifts}
-              >
+              {isEmpty(workShift.openShifts) ? null : <OpenShifts openShifts={workShift.openShifts} />}
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>
+              <Timestamp />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+            <Button variant="contained" color="primary" onClick={this.handleGetShifts}>
                 Get Shifts
-              </Button>
-
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Clock In</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Clock Out</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Duration</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {timeTableContent}
-                </TableBody>
-              </Table>
+            </Button>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              {workShift.loading || isEmpty(workShift.workShifts) ? null : <RecentShifts workShifts={workShift.workShifts} />}
             </Paper>
           </Grid>
         </Grid>
@@ -126,6 +93,7 @@ Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
   getShifts: PropTypes.func.isRequired,
   getOpenShifts: PropTypes.func.isRequired,
 };
