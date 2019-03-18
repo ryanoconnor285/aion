@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { clockIn } from '../../../actions/shiftActions';
+import { clockIn, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -33,6 +33,7 @@ class Timestamp extends React.Component {
 
     this.props.clockIn(newWorkShift);
     this.setState({ clockInDesc: '' });
+    this.props.getOpenShifts();
   }
 
   onChange = (e) => {
@@ -43,7 +44,7 @@ class Timestamp extends React.Component {
     const { classes } = this.props;
 
     return(
-      <form className={classes.container} noValidate autoComplete="off">
+      <div className={classes.container}>
         <TextField
           id="clockInDesc"
           name="clockInDesc"
@@ -63,7 +64,7 @@ class Timestamp extends React.Component {
         >
           Clock In
         </Button>
-      </form>
+      </div>
     )
   };
 }
@@ -71,7 +72,8 @@ Timestamp.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
-  clockIn: PropTypes.func.isRequired
+  clockIn: PropTypes.func.isRequired,
+  getOpenShifts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -81,4 +83,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { clockIn })(withStyles(styles)(Timestamp));
+export default connect(mapStateToProps, { clockIn, getOpenShifts })(withStyles(styles)(Timestamp));
