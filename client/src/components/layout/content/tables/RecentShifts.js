@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { clockOut } from '../../../../actions/shiftActions';
+import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +17,10 @@ const styles = theme => ({
   table: {
     minWidth: 375,
   },
+  tableRow: {
+    margin: 0,
+    padding: 0
+  }
 });
 
 class RecentShifts extends React.Component {
@@ -34,14 +38,14 @@ class RecentShifts extends React.Component {
       id: id
     };
     this.props.clockOut(clockOutData);
-    this.setState({ clockInDesc: '' });
+    this.props.getOpenShifts();
   }
 
   render() {
     const { workShifts, classes } = this.props;
     const dateFormat = "MM/DD HH:mm";
     const workShift = workShifts.map(workshift =>
-      <TableRow key={workshift._id} id={workshift._id}>
+      <TableRow class={classes.tableRow} key={workshift._id} id={workshift._id}>
         <TableCell>
           <Moment format={dateFormat}>
             {workshift.clockIn}
@@ -99,7 +103,8 @@ RecentShifts.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
-  clockOut: PropTypes.func.isRequired
+  clockOut: PropTypes.func.isRequired,
+  getOpenShifts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -108,4 +113,4 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { clockOut })(withStyles(styles)(RecentShifts));
+export default connect(mapStateToProps, { clockOut, getOpenShifts })(withStyles(styles)(RecentShifts));
