@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { clockOut } from '../../../../actions/shiftActions';
+import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
 import Moment from 'react-moment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -32,6 +32,7 @@ class OpenShift extends React.Component {
     };
     this.props.clockOut(clockOutData);
     this.setState({ clockInDesc: '' });
+    this.props.getOpenShifts();
   }
 
   render() {
@@ -52,7 +53,7 @@ class OpenShift extends React.Component {
     
     return (
       <List component="nav" className={classes.root}>
-        <Typography gutterBottom variant="h4">
+        <Typography gutterBottom variant="h6">
           Open Shifts
         </Typography>
         {shiftList}
@@ -66,7 +67,8 @@ OpenShift.propTypes = {
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  clockOut: PropTypes.func.isRequired
+  clockOut: PropTypes.func.isRequired,
+  getOpenShifts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -75,4 +77,4 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { clockOut })(withStyles(styles)(OpenShift));
+export default connect(mapStateToProps, { clockOut, getOpenShifts })(withStyles(styles)(OpenShift));
