@@ -86,7 +86,7 @@ router.post('/clockOut/:shiftId', passport.authenticate('jwt', { session: false 
   Shift.findOneAndUpdate(
     { _id: req.params.shiftId },
     { $set: shiftFields },
-    { new: true }
+    { new: true, useFindAndModify: false }
   )
     .then(shift => res.json(shift))
     .catch(err => res.status(404).json(err));
