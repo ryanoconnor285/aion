@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
+import { clockOut, getOpenShifts, getShifts } from '../../../../actions/shiftActions';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
@@ -25,6 +25,10 @@ class RecentShifts extends React.Component {
     this.state = {
       clockOutDesc: '',
     }
+  }
+
+  componentDidMount(){
+    this.props.getShifts();
   }
 
   handleClockOut = (id) => {
@@ -103,7 +107,8 @@ RecentShifts.propTypes = {
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   clockOut: PropTypes.func.isRequired,
-  getOpenShifts: PropTypes.func.isRequired
+  getShifts: PropTypes.func.isRequired,
+  getOpenShifts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -112,4 +117,5 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { clockOut, getOpenShifts })(withStyles(styles)(RecentShifts));
+export default connect(mapStateToProps, { getShifts, getOpenShifts, clockOut })(withStyles(styles)(RecentShifts));
+
