@@ -1,20 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
-import { Paper, withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
-import { Face, Fingerprint } from '@material-ui/icons'
+import '../../css/login.css'
 
-const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit * 2,
-  },
-  paper: {
-    padding: theme.spacing.unit,
-  }
-});
-
-class Login extends React.Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -47,6 +37,7 @@ class Login extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
+
     this.props.loginUser(userData);
   }
 
@@ -56,63 +47,34 @@ class Login extends React.Component {
 
   render() {
     const { errors } = this.state;
-    const { classes } = this.props;
 
     return (
-        <Paper className={classes.paper}>
-          <div className={classes.margin}>
-            <Grid container spacing={8}  alignItems="flex-end">
-              <Grid item>
-                <Face />
-              </Grid>
-              <Grid item md={true} sm={true} xs={true}>
-                <TextField
-                  placeholder="Email Address"
-                  name="email"
-                  type="email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  fullWidth 
-                  autoFocus 
-                  required 
-                />
-              </Grid>
-              <span>{errors.email ? errors.email : null}</span>
-            </Grid>
-            <Grid container spacing={8} alignItems="flex-end">
-              <Grid item>
-                <Fingerprint />
-              </Grid>
-              <Grid item md={true} sm={true} xs={true}>
-                <TextField
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  fullWidth 
-                  required 
-                />
-              </Grid>
-              <span>{errors.password ? errors.password : null}</span>
-            </Grid>
-            <Grid container alignItems="center" justify="space-between">
-              <Grid item>
-                <FormControlLabel control={
-                  <Checkbox
-                    color="primary"
-                  />
-                } label="Remember me" />
-              </Grid>
-              <Grid item>
-                <Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Forgot password ?</Button>
-              </Grid>
-            </Grid>
-            <Grid container justify="center" style={{ marginTop: '10px' }}>
-              <Button variant="outlined" color="primary" style={{ textTransform: "none" }} onClick={this.onSubmit}>Login</Button>
-            </Grid>
-          </div>
-        </Paper>
+      <div className="login">
+        <h2 className="login-header">Log In</h2>
+        <form className="login-container" onSubmit={this.onSubmit}>
+          <p>
+            <input
+              placeholder="Email Address"
+              name="email"
+              type="email"
+              value={this.state.email}
+              onChange={this.onChange}
+            />
+          </p>
+          <span>{errors.email ? errors.email : null}</span>
+          <p>
+            <input
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.onChange}
+            />
+          </p>
+          <span>{errors.password ? errors.password : null}</span>
+          <p><input type="submit" value="Login" /></p>
+        </form>
+      </div>
     );
   }
 }
@@ -128,5 +90,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(withStyles(styles)(Login));
-
+export default connect(mapStateToProps, { loginUser })(Login);
