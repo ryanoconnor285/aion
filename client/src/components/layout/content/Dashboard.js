@@ -5,9 +5,9 @@ import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import isEmpty from '../../../validation/isEmpty';
 import Timestamp from './Timestamp';
-import RecentShifts from './tables/RecentShifts';
 import OpenShifts from './shifts/OpenShifts';
-import { Button, Grid, Paper } from '@material-ui/core';
+import ShiftInfoTabs from './ShiftInfoTabs';
+import { Grid, Paper } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -48,10 +48,6 @@ class Dashboard extends Component {
     }
   }
 
-  handleGetShifts = () => {
-    this.props.getShifts();
-  }
-
   render() {
     const { workShift, classes } = this.props;
 
@@ -70,14 +66,7 @@ class Dashboard extends Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-            <Button variant="contained" color="primary" onClick={this.handleGetShifts}>
-                Get Shifts
-            </Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              {workShift.loading || isEmpty(workShift.workShifts) ? null : <RecentShifts workShifts={workShift.workShifts} />}
+              <ShiftInfoTabs workShifts={workShift.workShifts} openShifts={workShift.openShifts}/>
             </Paper>
           </Grid>
         </Grid>
