@@ -47,10 +47,10 @@ export const clockOut = clockOutData => dispatch => {
     );
 };
 
-// Get all of current user's shifts
+// Get recent of current user's shifts
 export const getShifts = () => dispatch => {
   dispatch(setShiftLoading());
-  axios.get('api/shift/all')
+  axios.get('api/shift/recent')
     .then(res =>
       dispatch({
         type: GET_WORK_SHIFTS,
