@@ -41,7 +41,7 @@ class Timestamp extends React.Component {
   }
 
   render(){
-    const { classes } = this.props;
+    const { auth, classes } = this.props;
 
     return(
       <div className={classes.container}>
@@ -61,7 +61,11 @@ class Timestamp extends React.Component {
           className={classes.button}
           fullWidth
           onClick={this.handleClockIn}
+          
         >
+          Clock In
+        </Button>
+        <Button href={"tel:" + auth.user.timeStampAction}>
           Clock In
         </Button>
       </div>
