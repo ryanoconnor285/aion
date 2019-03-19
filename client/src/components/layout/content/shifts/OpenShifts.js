@@ -20,7 +20,8 @@ class OpenShift extends React.Component {
   constructor() {
     super();
     this.state = {
-      clockOutDesc: ''
+      clockOutDesc: '',
+      openShifts: [],
     }
   }
 
