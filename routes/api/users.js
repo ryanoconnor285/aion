@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
+//TODO : Make profile API to handle timeStampAction
+
 // Load Validation
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
@@ -37,6 +39,7 @@ router.post('/register', (req, res) => {
         const newUser = new User({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
+          timeStampAction: req.body.timeStampAction,
           email: req.body.email,
           password: req.body.password
         });
@@ -106,6 +109,7 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
     id: req.user.id,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
+    timeStampAction: req.body.timeStampAction,
     email: req.user.email,
   });
 });
