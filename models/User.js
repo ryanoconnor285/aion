@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+//TODO : Make profile API to handle timeStampAction
+
 // Create User Schema
 const UserSchema = new Schema({
   firstName: {
@@ -10,6 +13,11 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
     required: true
+  },
+  timeStampAction: {
+    type: String,
+    required: false,
+    default: null
   },
   email: {
     type: String,
