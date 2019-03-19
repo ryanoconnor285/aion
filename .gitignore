@@ -12,7 +12,9 @@
 # production
 /client/build
 
-/seed
+
+seed.js
+shifts.json
 
 # misc
 .DS_Store
