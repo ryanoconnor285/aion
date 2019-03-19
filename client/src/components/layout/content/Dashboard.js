@@ -26,7 +26,7 @@ class Dashboard extends Component {
     this.state = {
       clockInDesc: '',
       clockOutDesc: '',
-      openShifts: '',
+      openShifts: [],
       isAuthenticated: '',
       errors: {}
     }
