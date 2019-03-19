@@ -20,7 +20,7 @@ const User = require('../../models/User');
 router.get('/test', (req, res) => res.json({ msg: 'Users Works' }));
 
 // @route   POST api/users/register
-// @desc    Register a new user
+// @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -30,32 +30,32 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (user) {
-        errors.email = 'Email already in use.';
-        return res.status(400).json({ errors });
-      } else {
-        const newUser = new User({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          timeStampAction: req.body.timeStampAction,
-          email: req.body.email,
-          password: req.body.password
-        });
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user) {
+      errors.emailExists = 'Email already exists';
+      return res.status(400).json(errors);
+    } else {
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => res.json(user))
-              .catch(err => console.log(err))
-          })
+      const newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        timeStampAction: req.body.timeStampAction,
+        password: req.body.password
+      });
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err));
         });
-      }
-    })
+      });
+    }
+  });
 });
 
 // @route   POST api/users/login
@@ -87,7 +87,13 @@ router.post('/login', (req, res) => {
           if (isMatch) {
             // User matched
 
-            const payload = { id: user.id, firstName: user.firstName, lastName: user.lastName } // Create JWT Payload
+            const payload = 
+            { 
+              id: user.id, 
+              firstName: user.firstName, 
+              lastName: user.lastName,
+              timeStampAction: user.timeStampAction 
+            } // Create JWT Payload
 
             // Sign Token
             jwt.sign(payload, keys.secretOrKey, { expiresIn: 10800 }, (err, token) => {
