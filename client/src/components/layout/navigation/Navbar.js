@@ -35,7 +35,6 @@ class Navbar extends React.Component {
 
     const authLinks = (
       <div>
-        <Button color="inherit" component={Link} to="/dashboard">Dashboard</Button>
         <Button color="inherit" onClick={this.onLogoutClick}>Logout</Button>
       </div>
     );
