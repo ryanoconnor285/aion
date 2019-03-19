@@ -44,10 +44,10 @@ router.get('/findOpen', passport.authenticate('jwt', { session: false }), (req, 
     .catch(err => res.status(404).json(err));
 });
 
-// @route   GET api/shift/all
+// @route   GET api/shift/recent
 // @desc    Get current user's shifts
 // @access  Private
-router.get('/all', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/recent', passport.authenticate('jwt', { session: false }), (req, res) => {
   const errors = {};
   Shift.find({ user: req.user.id }).limit(5).sort({ $natural: -1 })
     .then(shifts => {
