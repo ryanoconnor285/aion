@@ -53,9 +53,6 @@ class OpenShift extends React.Component {
     
     return (
       <List component="nav" className={classes.root}>
-        <Typography gutterBottom variant="h6">
-          Open Shifts
-        </Typography>
         {shiftList}
       </List>
     );
