@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import isEmpty from '../../../validation/isEmpty';
-import Timestamp from './Timestamp';
+import ClockInModal from './shifts/ClockInModal';
 import OpenShifts from './shifts/OpenShifts';
 import ShiftInfoTabs from './ShiftInfoTabs';
 import { Grid, Paper } from '@material-ui/core';
@@ -24,8 +24,6 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      clockInDesc: '',
-      clockOutDesc: '',
       openShifts: [],
       isAuthenticated: '',
       errors: {}
@@ -39,9 +37,6 @@ class Dashboard extends Component {
   componentWillReceiveProps(newProps) {
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
-    }
-    if (newProps.auth) {
-      this.setState({ isAuthenticated: newProps.openShifts });
     }
     if (newProps.workShift.openShifts) {
       this.setState({ openShifts: newProps.openShifts });
@@ -61,7 +56,7 @@ class Dashboard extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
-              <Timestamp />
+              <ClockInModal />
             </Paper>
           </Grid>
           <Grid item xs={12}>
