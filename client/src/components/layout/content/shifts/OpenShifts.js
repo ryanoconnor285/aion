@@ -31,7 +31,7 @@ class OpenShift extends React.Component {
        .map(openShift => 
         <ListItem key={openShift._id} id={openShift._id}>
           <Typography color="textSecondary">
-             You clocked in <Moment format={dateFormat}>{openShift.clockIn}</Moment>. 
+             You clocked in at <Moment format={dateFormat}>{openShift.clockIn}</Moment>. 
           </Typography>
            <ClockOutModal btnText={"Ready to clock out?"} id={openShift._id} />
         </ListItem>);
