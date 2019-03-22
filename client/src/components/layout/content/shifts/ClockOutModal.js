@@ -51,6 +51,7 @@ class ClockOutModal extends React.Component {
     this.props.clockOut(clockOutData);
     this.setState({ clockInDesc: '' });
     this.props.getOpenShifts();
+    this.handleClose();
   };
 
   render() {
@@ -123,7 +124,6 @@ class ClockOutModal extends React.Component {
 
 ClockOutModal.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   clockOut: PropTypes.func.isRequired,
@@ -132,7 +132,6 @@ ClockOutModal.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors,
   workShift: state.workShift
 });
 
