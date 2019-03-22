@@ -24,6 +24,10 @@ const styles = theme => ({
   },
   button: {
     margin: '5px'
+  },
+  clockInBtn: {
+    margin: '5px',
+    height: 50
   }
 });
 
@@ -60,8 +64,15 @@ class ClockInModal extends React.Component {
 
     return (
       <div>
-        <Typography gutterBottom>Click to get the full Modal experience!</Typography>
-        <Button onClick={this.handleOpen}>Clock In</Button>
+        <Button 
+          fullWidth
+          variant="contained"
+          color="primary" 
+          className={classes.clockInBtn} 
+          onClick={this.handleOpen}
+        >
+          Clock In
+        </Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -71,7 +82,7 @@ class ClockInModal extends React.Component {
         >
           <div className={classes.paper}>
             <Typography variant="h6" id="modal-title">
-              Text in a modal
+              Clock In
             </Typography>
             <TextField
               id="clockInDesc"
@@ -126,7 +137,6 @@ class ClockInModal extends React.Component {
 
 ClockInModal.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   clockIn: PropTypes.func.isRequired,
@@ -135,7 +145,6 @@ ClockInModal.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors,
   workShift: state.workShift
 });
 
