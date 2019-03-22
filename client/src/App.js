@@ -4,6 +4,9 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from '../src/style/Theme';
+
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -44,15 +47,17 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <div className="container">
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-            </div>
-            <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            </Switch>
+            <MuiThemeProvider theme={theme}>
+              <Navbar />
+              <Route exact path="/" component={Landing} />
+              <div className="container">
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+              </div>
+              <Switch>
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+            </MuiThemeProvider>
           </div>
         </Router>
       </Provider>
