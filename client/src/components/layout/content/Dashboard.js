@@ -50,14 +50,18 @@ class Dashboard extends Component {
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              {isEmpty(workShift.openShifts) ? null : <OpenShifts openShifts={workShift.openShifts} />}
-            </Paper>
+              {
+                isEmpty(workShift.openShifts) 
+                ? 
+                null 
+                : 
+                <Paper className={classes.paper}>
+                  <OpenShifts openShifts={workShift.openShifts} />
+                </Paper>
+              }
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>
-              <ClockInModal />
-            </Paper>
+            <ClockInModal />
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
