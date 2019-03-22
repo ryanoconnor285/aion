@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
-    minWidth: 275,
+    width: 375,
   },
   bullet: {
     display: 'inline-block',
@@ -23,6 +24,11 @@ const styles = {
 };
 
 class Landing extends React.Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
   render() {
     const { classes } = this.props;
     const bull = <span className={classes.bullet}>•</span>;
@@ -54,6 +60,11 @@ class Landing extends React.Component {
 
 Landing.propTypes = {
   classes: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Landing);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Landing));
