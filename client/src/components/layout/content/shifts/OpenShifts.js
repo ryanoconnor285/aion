@@ -1,13 +1,11 @@
 import React from 'react';
+import ClockOutModal from './ClockOutModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
 import Moment from 'react-moment';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { List, ListItem, Typography } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -20,20 +18,8 @@ class OpenShift extends React.Component {
   constructor() {
     super();
     this.state = {
-      clockOutDesc: '',
       openShifts: [],
     }
-  }
-
-  handleClockOut = (id) => {
-
-    const clockOutData = {
-      clockOutDesc: this.state.clockOutDesc,
-      id: id
-    };
-    this.props.clockOut(clockOutData);
-    this.setState({ clockInDesc: '' });
-    this.props.getOpenShifts();
   }
 
   render() {
@@ -47,9 +33,7 @@ class OpenShift extends React.Component {
           <Typography color="textSecondary">
              You clocked in <Moment format={dateFormat}>{openShift.clockIn}</Moment>. 
           </Typography>
-          <Button color="primary" onClick={() => this.handleClockOut(openShift._id)}>
-            Ready to clock out?
-          </Button>
+           <ClockOutModal btnText={"Ready to clock out?"} id={openShift._id} />
         </ListItem>);
     
     return (
