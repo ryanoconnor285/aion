@@ -35,6 +35,7 @@ class ClockInModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      clockInDesc: '',
       open: false,
     };
   }
@@ -46,6 +47,10 @@ class ClockInModal extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  onChange = (e) => {
+    this.setState({[e.target.name]: e.target.value });
+  }
 
   handleClockIn = (e) => {
     e.preventDefault();
