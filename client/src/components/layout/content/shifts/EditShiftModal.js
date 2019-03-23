@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
-import { clockIn, getOpenShifts } from '../../../../actions/shiftActions';
+import { clockIn, getOpenShifts, editShift } from '../../../../actions/shiftActions';
 import { Button, TextField, Typography, Modal, Fab, Icon } from '@material-ui/core';
 import DeleteShiftModal from './DeleteShiftModal';
 
@@ -36,8 +37,20 @@ class EditShiftModal extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: '',
+      clockInTime: '',
+      clockInDesc: '',
+      clockOutTime: '',
+      clockOutDesc: '',
       open: false,
+      errors: {}
     };
+  }
+
+  componentDidMount(){
+    this.setState({
+      clockInTime: this.props.clockInTime,
+    })
   }
 
   handleOpen = () => {
@@ -48,20 +61,27 @@ class EditShiftModal extends React.Component {
     this.setState({ open: false });
   };
 
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   handleEditShift = (e) => {
     e.preventDefault();
     const editShiftData = {
-      clockInDesc: this.state.clockInDesc
+      id: this.props.id,
+      clockInTime: moment(this.state.clockInTime).format(),
+      clockInDesc: this.state.clockInDesc,
+      clockOutTime: moment(this.state.clockOutTime).format(),
+      clockOutDesc: this.state.clockOutDesc
     };
-
-    this.props.clockIn(editShiftData);
-    this.setState({ clockInDesc: '' });
+    console.log(editShiftData);
+    this.props.editShift(editShiftData);
     this.props.getOpenShifts();
     this.handleClose();
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props; 
 
     return (
       <div>
@@ -85,21 +105,24 @@ class EditShiftModal extends React.Component {
               Update Shift 
             </Typography>
             <TextField
-              id="clockIn"
-              name="clockIn"
+              id="clockInTime"
+              name="clockInTime"
               label="Clock In"
-              value={this.props.clockInTime}
+              defaultValue={moment(this.props.clockInTime).format('MM/DD/YYYY, h:mm:ss a')}
+              // value={this.state.clockInTime}
               placeholder="Clock in time"
               className={classes.textField}
               fullWidth
               margin="normal"
               onChange={this.onChange}
             />
+            
             <TextField
               id="clockInDesc"
               name="clockInDesc"
               label="Description"
-              value={this.state.clockInDesc}
+              defaultValue={this.props.clockInDesc}
+              // value={this.state.clockInDesc}
               placeholder="Clock in description"
               className={classes.textField}
               fullWidth
@@ -107,22 +130,24 @@ class EditShiftModal extends React.Component {
               onChange={this.onChange}
             />
             <TextField
-              id="clockInDesc"
-              name="clockInDesc"
-              label="Description"
-              value={this.state.clockInDesc}
-              placeholder="Clock in description"
+              id="clockOutTime"
+              name="clockOutTime"
+              label="Clock Out"
+              defaultValue={moment(this.props.clockOutTime).format('MM/DD/YYYY, h:mm:ss a')}
+              // value={this.state.clockOutTime}
+              placeholder="Clock out"
               className={classes.textField}
               fullWidth
               margin="normal"
               onChange={this.onChange}
             />
             <TextField
-              id="clockInDesc"
-              name="clockInDesc"
+              id="clockOutDesc"
+              name="clockOutDesc"
               label="Description"
-              value={this.state.clockInDesc}
-              placeholder="Clock in description"
+              defaultValue={this.props.clockOutDesc}
+              // value={this.state.clockOutDesc}
+              placeholder="Clock out description"
               className={classes.textField}
               fullWidth
               margin="normal"
@@ -133,7 +158,7 @@ class EditShiftModal extends React.Component {
               color="primary"
               className={classes.button}
               fullWidth
-              onClick={this.handleClose}
+              onClick={this.handleEditShift}
             >
               Save Changes
             </Button>
@@ -159,7 +184,8 @@ EditShiftModal.propTypes = {
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   clockIn: PropTypes.func.isRequired,
-  getOpenShifts: PropTypes.func.isRequired
+  getOpenShifts: PropTypes.func.isRequired,
+  editShift: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -168,4 +194,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { clockIn, getOpenShifts })(withStyles(styles)(EditShiftModal));
+export default connect(mapStateToProps, { clockIn, getOpenShifts, editShift })(withStyles(styles)(EditShiftModal));
