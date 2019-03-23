@@ -6,4 +6,5 @@ export const WORK_SHIFT_LOADING = "WORK_SHIFT_LOADING";
 export const CLOCK_IN = "CLOCK_IN";
 export const CLOCK_OUT = "CLOCK_OUT";
 export const GET_OPEN_SHIFTS = "GET_OPEN_SHIFTS";
+export const EDIT_SHIFT = "EDIT_SHIFT";
 
