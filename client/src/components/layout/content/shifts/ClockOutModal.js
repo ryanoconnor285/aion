@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
+import { clockOut, getOpenShifts, getShifts } from '../../../../actions/shiftActions';
 import { Button, TextField, Typography, Modal } from '@material-ui/core';
 
 
@@ -31,6 +31,7 @@ class ClockOutModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      clockOutDesc: '',
       open: false,
     };
   }
@@ -43,13 +44,18 @@ class ClockOutModal extends React.Component {
     this.setState({ open: false });
   };
 
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+
   handleClockOut = (id) => {
     const clockOutData = {
       clockOutDesc: this.state.clockOutDesc,
       id: this.props.id
     };
     this.props.clockOut(clockOutData);
-    this.setState({ clockInDesc: '' });
+    this.setState({ clockOutDesc: '' });
     this.props.getOpenShifts();
     this.handleClose();
   };
@@ -72,10 +78,10 @@ class ClockOutModal extends React.Component {
               Text in a modal
             </Typography>
             <TextField
-              id="clockInDesc"
-              name="clockInDesc"
+              id="clockOutDesc"
+              name="clockOutDesc"
               label="Description"
-              value={this.state.clockInDesc}
+              value={this.state.clockOutDesc}
               placeholder="Clock in description"
               className={classes.textField}
               fullWidth
@@ -127,7 +133,8 @@ ClockOutModal.propTypes = {
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   clockOut: PropTypes.func.isRequired,
-  getOpenShifts: PropTypes.func.isRequired
+  getOpenShifts: PropTypes.func.isRequired,
+  getShifts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -136,4 +143,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { clockOut, getOpenShifts })(withStyles(styles)(ClockOutModal));
+export default connect(mapStateToProps, { clockOut, getOpenShifts, getShifts })(withStyles(styles)(ClockOutModal));
