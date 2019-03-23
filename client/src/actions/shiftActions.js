@@ -6,7 +6,8 @@ import {
   CLOCK_IN, CLOCK_OUT, 
   GET_ERRORS, 
   CLEAR_ERRORS, 
-  GET_OPEN_SHIFTS 
+  GET_OPEN_SHIFTS,
+  EDIT_SHIFT
 } from './types';
 
 // Clock In
@@ -82,6 +83,25 @@ export const getOpenShifts = () => dispatch => {
       })
     );
 }
+
+// Clock Out
+export const editShift = editShiftData => dispatch => {
+  dispatch(clearErrors());
+  axios
+    .post(`api/shift/clockOut/${editShiftData.id}`, editShiftData)
+    .then(res =>
+      dispatch({
+        type: EDIT_SHIFT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
 
 // Set loading state
 export const setShiftLoading = () => {
