@@ -3,7 +3,8 @@ import {
   WORK_SHIFT_LOADING,
   CLOCK_IN,
   CLOCK_OUT,
-  GET_OPEN_SHIFTS
+  GET_OPEN_SHIFTS,
+  EDIT_SHIFT
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,10 @@ export default function (state = initialState, action) {
         ...state,
         openShifts: action.payload,
         loading: false
+      }; 
+    case EDIT_SHIFT:
+      return {
+        ...state,
       };
     case CLOCK_IN:
       return {
