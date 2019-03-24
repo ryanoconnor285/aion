@@ -35,6 +35,7 @@ export default function (state = initialState, action) {
     case EDIT_SHIFT:
       return {
         ...state,
+        workShift: action.payload
       };
     case CLOCK_IN:
       return {
