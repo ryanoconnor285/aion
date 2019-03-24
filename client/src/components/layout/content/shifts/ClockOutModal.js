@@ -57,6 +57,7 @@ class ClockOutModal extends React.Component {
     this.props.clockOut(clockOutData);
     this.setState({ clockOutDesc: '' });
     this.props.getOpenShifts();
+    this.props.getShifts();
     this.handleClose();
   };
 
