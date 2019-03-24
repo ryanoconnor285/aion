@@ -88,7 +88,7 @@ export const getOpenShifts = () => dispatch => {
 export const editShift = editShiftData => dispatch => {
   dispatch(clearErrors());
   axios
-    .post(`api/shift/clockOut/${editShiftData.id}`, editShiftData)
+    .post(`api/shift/edit/${editShiftData.id}`, editShiftData)
     .then(res =>
       dispatch({
         type: EDIT_SHIFT,
