@@ -48,7 +48,6 @@ class ClockOutModal extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-
   handleClockOut = (id) => {
     const clockOutData = {
       clockOutDesc: this.state.clockOutDesc,
