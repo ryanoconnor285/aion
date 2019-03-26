@@ -4,7 +4,8 @@ import {
   CLOCK_IN,
   CLOCK_OUT,
   GET_OPEN_SHIFTS,
-  EDIT_SHIFT
+  EDIT_SHIFT,
+  DELETE_POST
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +37,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         workShift: action.payload
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        workShifts: state.workShifts.filter(workShift => workShift._id !== action.payload)
       };
     case CLOCK_IN:
       return {
