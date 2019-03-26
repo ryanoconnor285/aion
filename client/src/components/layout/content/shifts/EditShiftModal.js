@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import isEmpty from '../../../../validation/isEmpty';
 import { withStyles } from '@material-ui/core/styles';
-import { getOpenShifts, editShift } from '../../../../actions/shiftActions';
+import { getShifts, editShift } from '../../../../actions/shiftActions';
 import { Button, TextField, Typography, Modal, Fab, Icon } from '@material-ui/core';
-import DeleteShiftModal from './DeleteShiftModal';
-
 
 const styles = theme => ({
   paper: {
@@ -38,23 +37,14 @@ class EditShiftModal extends React.Component {
     super(props);
     this.state = {
       id: '',
-      clockInTime: '',
+      clockIn: '',
       clockInDesc: '',
-      clockOutTime: '',
+      clockOut: '',
       clockOutDesc: '',
+      confirmDelete: false,
       open: false,
       errors: {}
     };
-  }
-
-  componentDidMount() {
-    this.setState({
-      id: this.props.id,
-      clockInTime: this.props.clockInTime,
-      clockInDesc: this.props.clockInDesc,
-      clockOutTime: this.props.clockOutTime,
-      clockOutDesc: this.props.clockOutDesc,
-    })
   }
 
   handleOpen = () => {
@@ -71,21 +61,78 @@ class EditShiftModal extends React.Component {
 
   handleEditShift = (e) => {
     e.preventDefault();
-    const editShiftData = {
-      id: this.props.id,
-      clockInTime: moment(this.state.clockInTime).format(),
-      clockInDesc: this.state.clockInDesc,
-      clockOutTime: moment(this.state.clockOutTime).format(),
-      clockOutDesc: this.state.clockOutDesc
-    };
-    console.log(editShiftData);
+    const editShiftData = {};
+    editShiftData.id = this.props.id;
+    editShiftData.clockInDesc = this.state.clockInDesc;
+    editShiftData.clockOutDesc = this.state.clockOutDesc;
+    if(!isEmpty(this.state.clockIn)){editShiftData.clockIn = moment(this.state.clockIn).format()}
+    if(!isEmpty(this.state.clockOut)){editShiftData.clockOut = moment(this.state.clockOut).format()}
     this.props.editShift(editShiftData);
-    this.props.getOpenShifts();
+    this.props.getShifts();
     this.handleClose();
   }
 
+  handleConfirmDelete = () => {
+    this.setState({ confirmDelete: !this.state.confirmDelete })
+  }
+
   render() {
-    const { classes } = this.props; 
+    const { workshift, classes } = this.props;
+    
+    const modalActions = (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          fullWidth
+          onClick={this.handleEditShift}
+        >
+          Save Changes
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          fullWidth
+          onClick={this.handleConfirmDelete}
+        >
+          Delete
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          fullWidth
+          onClick={this.handleClose}
+        >
+          Cancel
+        </Button>
+      </div>
+    ); 
+    
+    const deleteActions = (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          fullWidth
+          onClick={this.handleConfirmDelete}
+        >
+          Permanently Delete
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          fullWidth
+          onClick={this.handleConfirmDelete}
+        >
+          Cancel
+        </Button>
+      </div>
+    );
 
     return (
       <div>
@@ -109,11 +156,10 @@ class EditShiftModal extends React.Component {
               Update Shift 
             </Typography>
             <TextField
-              id="clockInTime"
-              name="clockInTime"
+              id="clockIn"
+              name="clockIn"
               label="Clock In"
-              value={moment(this.state.clockInTime).format('MM/DD/YYYY, h:mm:ss a')}
-              // value={this.state.clockInTime}
+              defaultValue={moment(workshift.clockIn).format('MM/DD/YYYY, hh:mm:ss a')}
               placeholder="Clock in time"
               className={classes.textField}
               fullWidth
@@ -125,8 +171,7 @@ class EditShiftModal extends React.Component {
               id="clockInDesc"
               name="clockInDesc"
               label="Description"
-              value={this.state.clockInDesc}
-              // value={this.state.clockInDesc}
+              defaultValue={workshift.clockInDesc}
               placeholder="Clock in description"
               className={classes.textField}
               fullWidth
@@ -134,11 +179,10 @@ class EditShiftModal extends React.Component {
               onChange={this.onChange}
             />
             <TextField
-              id="clockOutTime"
-              name="clockOutTime"
+              id="clockOut"
+              name="clockOut"
               label="Clock Out"
-              value={moment(this.state.clockOutTime).format('MM/DD/YYYY, h:mm:ss a')}
-              // value={this.state.clockOutTime}
+              defaultValue={moment(workshift.clockOut).format('MM/DD/YYYY, hh:mm:ss a')}
               placeholder="Clock out"
               className={classes.textField}
               fullWidth
@@ -149,33 +193,17 @@ class EditShiftModal extends React.Component {
               id="clockOutDesc"
               name="clockOutDesc"
               label="Description"
-              value={this.state.clockOutDesc}
-              // value={this.state.clockOutDesc}
+              defaultValue={workshift.clockOutDesc}
               placeholder="Clock out description"
               className={classes.textField}
               fullWidth
               margin="normal"
               onChange={this.onChange}
             />
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              fullWidth
-              onClick={this.handleEditShift}
-            >
-              Save Changes
-            </Button>
-            <DeleteShiftModal />
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              fullWidth
-              onClick={this.handleClose}
-            >
-              Cancel
-            </Button>
+            <span>
+              {this.state.confirmDelete ? "Are you sure you want to permanently delete this shift?" : null}
+            </span>
+            { this.state.confirmDelete ? deleteActions : modalActions }
           </div>
         </Modal>
       </div>
@@ -187,7 +215,7 @@ EditShiftModal.propTypes = {
   auth: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  getOpenShifts: PropTypes.func.isRequired,
+  getShifts: PropTypes.func.isRequired,
   editShift: PropTypes.func.isRequired
 };
 
@@ -197,4 +225,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { getOpenShifts, editShift })(withStyles(styles)(EditShiftModal));
+export default connect(mapStateToProps, { getShifts, editShift })(withStyles(styles)(EditShiftModal));
