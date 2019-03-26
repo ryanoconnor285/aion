@@ -15,13 +15,13 @@ $ git clone https://github.com/rocsteady888/aion.git
 
 You will need an [mLab](https://mlab.com/signup/) account if you don't already have one set up 
 
-```
+```bash
 $ yarn version
 yarn version v1.13.0
 info Current version: 1.0.0
 question New version:
 ```
-```
+```bash
 $ node -v
 v10.13.0
 ```
@@ -30,11 +30,11 @@ v10.13.0
 
 A step by step series of examples that tells you how to get a development env running
 
-##### Install Dependencies
+#### Install Dependencies
 
 You can use npm to install dependicies but yarn is a better option for React apps
 
-```
+```bash
 $ yarn
 $ cd client && yarn
 ```
@@ -46,7 +46,7 @@ $ mkdir config && cd config
 $ touch passport.js keys.js keys_prod.js keys_dev.js
 ```
 You should have a folder structure that looks like this.
--config
+-config:
   -keys_dev.js
   -keys_prod.js
   -keys.js
@@ -55,7 +55,7 @@ You should have a folder structure that looks like this.
 #### Passport Setup
 
 Here is how I set 
-```
+```javascript
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const mongoose = require('mongoose');
@@ -84,7 +84,7 @@ module.exports = passport => {
 
 #### Keys Setup
 keys.js
-```
+```javascript
 if (process.env.NODE_ENV === 'production') {
   module.exports = require('./keys_prod');
 } else {
@@ -93,7 +93,7 @@ if (process.env.NODE_ENV === 'production') {
 ```
 ---------------
 keys_dev.js
-```
+```javascript
 module.exports = {
   mongoURI: 'mongodb://<dbuser>:<dbpassword>@ds012345-a0.mlab.com:56789',
   secretOrKey: 'secret'
@@ -101,12 +101,26 @@ module.exports = {
 ```
 ------------------
 keys_prod.js
-```
+```javascript
 module.exports = {
   mongoURI: process.env.MONGODB_URI,
   secretOrKey: process.env.SECRET_OR_KEY
 };
 ```
+
+
+## Deployment
+For available scripts, check the package.json file.  
+for the client 
+```bash
+$ cd client && yarn start
+```
+for the server 
+```bash
+npm run dev
+```
+
+
 
 ## Deployment
 
