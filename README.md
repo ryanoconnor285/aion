@@ -109,13 +109,15 @@ module.exports = {
 ```
 
 
-## Deployment
+## Starting Up
 For available scripts, check the package.json file.  
-for the client 
+
+To start the client 
 ```bash
 $ cd client && yarn start
 ```
-for the server 
+
+To start the server and connect to mLab
 ```bash
 npm run dev
 ```
