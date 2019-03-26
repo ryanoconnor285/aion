@@ -32,6 +32,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.props.getOpenShifts();
+    this.props.getShifts();
   }
 
   componentWillReceiveProps(newProps) {
