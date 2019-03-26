@@ -7,7 +7,8 @@ import {
   GET_ERRORS, 
   CLEAR_ERRORS, 
   GET_OPEN_SHIFTS,
-  EDIT_SHIFT
+  EDIT_SHIFT,
+  DELETE_POST
 } from './types';
 
 // Clock In
@@ -86,13 +87,30 @@ export const getOpenShifts = () => dispatch => {
 
 // Edit Shift
 export const editShift = editShiftData => dispatch => {
-  dispatch(clearErrors());
   axios
     .post(`api/shift/edit/${editShiftData.id}`, editShiftData)
     .then(res =>
       dispatch({
         type: EDIT_SHIFT,
         payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Delete Shift
+export const deleteShift = id => dispatch => {
+  axios
+    .post(`api/shift/delete/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_POST,
+        payload: id
       })
     )
     .catch(err =>
