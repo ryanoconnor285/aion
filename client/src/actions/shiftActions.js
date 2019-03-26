@@ -84,7 +84,7 @@ export const getOpenShifts = () => dispatch => {
     );
 }
 
-// Clock Out
+// Edit Shift
 export const editShift = editShiftData => dispatch => {
   dispatch(clearErrors());
   axios
