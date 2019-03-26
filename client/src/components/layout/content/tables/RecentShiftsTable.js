@@ -37,7 +37,7 @@ class RecentShifts extends React.Component {
   }
 
   componentDidMount(){
-    this.props.getShifts();
+    // this.props.getShifts();
   }
 
   render() {
@@ -76,11 +76,8 @@ class RecentShifts extends React.Component {
         </TableCell>
         <TableCell>
           <EditShiftModal 
-            id={workshift._id} 
-            clockInTime={workshift.clockIn}
-            clockInDesc={workshift.clockInDesc}
-            clockOutTime={workshift.clockOut}
-            clockOutDesc={workshift.clockOutDesc}
+            id={workshift._id}
+            workshift={workshift}
           />
         </TableCell>
       </TableRow>
