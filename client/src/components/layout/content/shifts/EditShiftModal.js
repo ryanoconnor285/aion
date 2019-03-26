@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import isEmpty from '../../../../validation/isEmpty';
 import { withStyles } from '@material-ui/core/styles';
-import { getShifts, editShift } from '../../../../actions/shiftActions';
+import { getShifts, editShift, deleteShift } from '../../../../actions/shiftActions';
 import { Button, TextField, Typography, Modal, Fab, Icon } from '@material-ui/core';
 
 const styles = theme => ({
@@ -59,8 +59,7 @@ class EditShiftModal extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleEditShift = (e) => {
-    e.preventDefault();
+  handleEditShift = () => {
     const editShiftData = {};
     editShiftData.id = this.props.id;
     editShiftData.clockInDesc = this.state.clockInDesc;
@@ -76,6 +75,12 @@ class EditShiftModal extends React.Component {
     this.setState({ confirmDelete: !this.state.confirmDelete })
   }
 
+  handleDeleteShift = (id) => {
+    this.props.deleteShift(id);
+    this.props.getShifts();
+    this.handleClose();
+  }
+
   render() {
     const { workshift, classes } = this.props;
     
@@ -86,7 +91,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={this.handleEditShift}
+          onClick={() => {this.handleEditShift()}}
         >
           Save Changes
         </Button>
@@ -95,7 +100,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={this.handleConfirmDelete}
+          onClick={() => {this.handleConfirmDelete()}}
         >
           Delete
         </Button>
@@ -104,7 +109,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={this.handleClose}
+          onClick={() => {this.handleClose()}}
         >
           Cancel
         </Button>
@@ -118,7 +123,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={this.handleConfirmDelete}
+          onClick={() => {this.handleDeleteShift(this.props.id)}}
         >
           Permanently Delete
         </Button>
@@ -127,7 +132,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={this.handleConfirmDelete}
+          onClick={() => {this.handleConfirmDelete()}}
         >
           Cancel
         </Button>
@@ -201,7 +206,7 @@ class EditShiftModal extends React.Component {
               onChange={this.onChange}
             />
             <span>
-              {this.state.confirmDelete ? "Are you sure you want to permanently delete this shift?" : null}
+              { this.state.confirmDelete ? "Are you sure you want to permanently delete this shift?" : null }
             </span>
             { this.state.confirmDelete ? deleteActions : modalActions }
           </div>
@@ -215,8 +220,9 @@ EditShiftModal.propTypes = {
   auth: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  getShifts: PropTypes.func.isRequired,
-  editShift: PropTypes.func.isRequired
+  getShifts: PropTypes.func.isRequired, 
+  editShift: PropTypes.func.isRequired,
+  deleteShift: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -225,4 +231,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { getShifts, editShift })(withStyles(styles)(EditShiftModal));
+export default connect(mapStateToProps, { getShifts, editShift, deleteShift })(withStyles(styles)(EditShiftModal));
