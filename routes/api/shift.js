@@ -94,24 +94,22 @@ router.post('/clockOut/:shiftId', passport.authenticate('jwt', { session: false 
 });
 
 // @route   POST api/shift/edit/:shiftId
-// @desc    Clock out of shift with param shiftId
+// @desc    Edit shift with param shiftId
 // @access  Private
 router.post('/edit/:shiftId', passport.authenticate('jwt', { session: false }), (req, res) => {
 
-  const errors = {};
   const shiftFields = {};
   if (req.body.clockInDesc) shiftFields.clockInDesc = req.body.clockInDesc;
   if (req.body.clockIn) shiftFields.clockIn = req.body.clockIn;
   if (req.body.clockOutDesc) shiftFields.clockOutDesc = req.body.clockOutDesc;
   if (req.body.clockOut) shiftFields.clockOut = req.body.clockOut;
-  Shift.findByIdAndUpdate({ _id: req.params.shiftId })
-    .then(shift => {
-      if (!shift) {
-        errors.noShift = 'There is no shift for this user';
-        return res.status(400).json(errors);
-      }
-      return res.json()
-    })
+
+  Shift.findOneAndUpdate(
+    { _id: req.params.shiftId },
+    { $set: shiftFields },
+    { new: false, useFindAndModify: false }
+  )
+    .then(shift => res.json(shift))
     .catch(err => res.status(404).json(err));
 
 });
