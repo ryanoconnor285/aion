@@ -7,4 +7,5 @@ export const CLOCK_IN = "CLOCK_IN";
 export const CLOCK_OUT = "CLOCK_OUT";
 export const GET_OPEN_SHIFTS = "GET_OPEN_SHIFTS";
 export const EDIT_SHIFT = "EDIT_SHIFT";
+export const DELETE_POST = "DELETE_POST";
 
