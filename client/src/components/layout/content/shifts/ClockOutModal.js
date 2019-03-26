@@ -75,7 +75,7 @@ class ClockOutModal extends React.Component {
         >
           <div className={classes.paper}>
             <Typography variant="h6" id="modal-title">
-              Text in a modal
+              Clock Out
             </Typography>
             <TextField
               id="clockOutDesc"
