@@ -52,12 +52,12 @@ class EditShifts extends Component {
           <Grid item xs={12} sm={6} md={3}>
             {
               isEmpty(workShift.openShifts)
-                ?
-                null
-                :
-                <Paper className={classes.paper}>
-                  <OpenShifts openShifts={workShift.openShifts} />
-                </Paper>
+              ?
+              null
+              :
+              <Paper className={classes.paper}>
+                <OpenShifts openShifts={workShift.openShifts} />
+              </Paper>
             }
           </Grid>
           <Grid item xs={12} sm={6}>
