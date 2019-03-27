@@ -26,8 +26,10 @@ const styles = theme => ({
     margin: '5px'
   },
   clockInBtn: {
+    color: 'white',
     margin: '5px',
-    height: 50
+    maxWidth: 350,
+    height: 55
   }
 });
 
@@ -70,9 +72,6 @@ class ClockInModal extends React.Component {
     return (
       <div>
         <Button 
-          fullWidth
-          variant="contained"
-          color="primary" 
           className={classes.clockInBtn} 
           onClick={this.handleOpen}
         >
