@@ -5,7 +5,8 @@ import moment from 'moment';
 import isEmpty from '../../../../validation/isEmpty';
 import { withStyles } from '@material-ui/core/styles';
 import { getShifts, editShift, deleteShift } from '../../../../actions/shiftActions';
-import { Button, TextField, Typography, Modal, Fab, Icon } from '@material-ui/core';
+import { Button, TextField, Typography, Modal } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = theme => ({
   paper: {
@@ -24,7 +25,10 @@ const styles = theme => ({
     },
   },
   button: {
-    margin: '5px'
+    margin: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
   clockInBtn: {
     margin: '5px',
@@ -61,7 +65,7 @@ class EditShiftModal extends React.Component {
 
   handleEditShift = () => {
     const editShiftData = {};
-    editShiftData.id = this.props.id;
+    editShiftData.id = this.props.workshift._id;
     editShiftData.clockInDesc = this.state.clockInDesc;
     editShiftData.clockOutDesc = this.state.clockOutDesc;
     if(!isEmpty(this.state.clockIn)){editShiftData.clockIn = moment(this.state.clockIn).format()}
@@ -71,9 +75,9 @@ class EditShiftModal extends React.Component {
     this.handleClose();
   }
 
-  handleConfirmDelete = () => {
-    this.setState({ confirmDelete: !this.state.confirmDelete })
-  }
+  handleToggle() {
+		this.setState(prevState => ({confirmDelete: !prevState.confirmDelete}));
+	}
 
   handleDeleteShift = (id) => {
     this.props.deleteShift(id);
@@ -100,7 +104,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={() => {this.handleConfirmDelete()}}
+          onClick={() => { this.handleToggle()}}
         >
           Delete
         </Button>
@@ -132,7 +136,7 @@ class EditShiftModal extends React.Component {
           color="primary"
           className={classes.button}
           fullWidth
-          onClick={() => {this.handleConfirmDelete()}}
+          onClick={() => { this.handleToggle()}}
         >
           Cancel
         </Button>
@@ -141,14 +145,11 @@ class EditShiftModal extends React.Component {
 
     return (
       <div>
-        <Fab 
-          color="secondary" 
-          aria-label="Edit" 
-          className={classes.fab}
-          onClick={this.handleOpen}
-        >
-          <Icon>edit_icon</Icon>
-        </Fab>
+        <Button variant="contained" color="secondary" className={classes.button}
+          onClick={this.handleOpen}>
+          Edit
+          <EditIcon className={classes.rightIcon} />
+        </Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -183,28 +184,40 @@ class EditShiftModal extends React.Component {
               margin="normal"
               onChange={this.onChange}
             />
-            <TextField
-              id="clockOut"
-              name="clockOut"
-              label="Clock Out"
-              defaultValue={moment(workshift.clockOut).format('MM/DD/YYYY, hh:mm:ss a')}
-              placeholder="Clock out"
-              className={classes.textField}
-              fullWidth
-              margin="normal"
-              onChange={this.onChange}
-            />
-            <TextField
-              id="clockOutDesc"
-              name="clockOutDesc"
-              label="Description"
-              defaultValue={workshift.clockOutDesc}
-              placeholder="Clock out description"
-              className={classes.textField}
-              fullWidth
-              margin="normal"
-              onChange={this.onChange}
-            />
+            {
+              workshift.clockOut
+              ?
+              <TextField
+                id="clockOut"
+                name="clockOut"
+                label="Clock Out"
+                defaultValue={moment(workshift.clockOut).format('MM/DD/YYYY, hh:mm:ss a')}
+                placeholder="Clock out"
+                className={classes.textField}
+                fullWidth
+                margin="normal"
+                onChange={this.onChange}
+              />
+              : 
+              null
+            }
+            {
+              workshift.clockOut
+              ?
+              <TextField
+                id="clockOutDesc"
+                name="clockOutDesc"
+                label="Description"
+                defaultValue={workshift.clockOutDesc}
+                placeholder="Clock out description"
+                className={classes.textField}
+                fullWidth
+                margin="normal"
+                onChange={this.onChange}
+              />
+              :
+              null
+            }
             <span>
               { this.state.confirmDelete ? "Are you sure you want to permanently delete this shift?" : null }
             </span>
