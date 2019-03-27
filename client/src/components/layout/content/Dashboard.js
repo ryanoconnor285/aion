@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import isEmpty from '../../../validation/isEmpty';
-import ClockInModal from './shifts/ClockInModal';
 import OpenShifts from './shifts/OpenShifts';
 import ShiftInfoTabs from './ShiftInfoTabs';
 import { Grid, Paper } from '@material-ui/core';
@@ -49,7 +48,7 @@ class Dashboard extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={8}>
           <Grid item xs={12}>
               {
                 isEmpty(workShift.openShifts) 
@@ -60,9 +59,6 @@ class Dashboard extends Component {
                   <OpenShifts openShifts={workShift.openShifts} />
                 </Paper>
               }
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <ClockInModal />
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
