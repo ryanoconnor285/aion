@@ -5,7 +5,7 @@ import {
   CLOCK_OUT,
   GET_OPEN_SHIFTS,
   EDIT_SHIFT,
-  DELETE_POST
+  DELETE_SHIFT
 } from '../actions/types';
 
 const initialState = {
@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
         ...state,
         workShift: action.payload
       };
-    case DELETE_POST:
+    case DELETE_SHIFT:
       return {
         ...state,
         workShifts: state.workShifts.filter(workShift => workShift._id !== action.payload)
