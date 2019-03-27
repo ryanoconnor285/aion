@@ -8,7 +8,7 @@ import {
   CLEAR_ERRORS, 
   GET_OPEN_SHIFTS,
   EDIT_SHIFT,
-  DELETE_POST
+  DELETE_SHIFT
 } from './types';
 
 // Clock In
@@ -109,7 +109,7 @@ export const deleteShift = id => dispatch => {
     .post(`api/shift/delete/${id}`)
     .then(res =>
       dispatch({
-        type: DELETE_POST,
+        type: DELETE_SHIFT,
         payload: id
       })
     )
