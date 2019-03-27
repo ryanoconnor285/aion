@@ -29,7 +29,12 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   padding: {
-    padding: `0 ${theme.spacing.unit * 2}px`,
+    [theme.breakpoints.down('xs')]: {
+      margin: theme.spacing.unit * 2,
+    },
+    [theme.breakpoints.up('md')]: {
+      padding: `0 ${theme.spacing.unit * 2}px`,
+    },
   },
 });
 
@@ -72,7 +77,7 @@ class ShiftInfoTabs extends React.Component {
             {
               isMobile 
               ?
-              <ShiftCard />
+              <ShiftCard workShifts={workShifts} />
               :
               <RecentShiftsTable workShifts={workShifts} /> 
             }
