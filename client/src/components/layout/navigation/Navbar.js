@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/authActions';
+import ClockInModal from '../content/shifts/ClockInModal';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const styles = {
-  root: {
+  navbar: {
     flexGrow: 1,
   },
   grow: {
@@ -47,9 +48,10 @@ class Navbar extends React.Component {
     );
 
     return (
-      <div className={classes.root}>
+      <div className={classes.navbar}>
         <AppBar position="static">
           <Toolbar>
+            {isAuthenticated ? <ClockInModal /> : null}
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Aion
             </Typography>
