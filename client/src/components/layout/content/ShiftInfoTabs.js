@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import RecentShiftsTable from './tables/RecentShiftsTable';
 import ShiftCard from '../content/cards/ShiftCard';
-import OpenShifts from './shifts/OpenShifts';
 import isEmpty from '../../../validation/isEmpty';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -82,7 +81,7 @@ class ShiftInfoTabs extends React.Component {
               <RecentShiftsTable workShifts={workShifts} /> 
             }
           </TabContainer>}
-        {value === 1 && <TabContainer><OpenShifts openShifts={openShifts}/></TabContainer>}
+        {value === 1 && <TabContainer><ShiftCard workShifts={openShifts} /></TabContainer>}
         {value === 2 && <TabContainer>Coming Soon</TabContainer>}
       </div>
     );
