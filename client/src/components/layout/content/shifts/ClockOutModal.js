@@ -65,7 +65,7 @@ class ClockOutModal extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.handleOpen}>{this.props.btnText}</Button>
+        <Button color="primary" onClick={this.handleOpen}>{this.props.btnText}</Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
