@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { clockOut, getOpenShifts } from '../../../../actions/shiftActions';
-import Moment from 'react-moment';
-import { List, ListItem, Typography } from '@material-ui/core';
+import moment from 'moment';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
+  snackbar: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -24,22 +23,27 @@ class OpenShift extends React.Component {
 
   render() {
     const { openShifts, classes } = this.props;
-    const dateFormat = "LT on MM/DD";
-    
     const shiftList = 
       openShifts
        .map(openShift => 
-        <ListItem key={openShift._id} id={openShift._id}>
-          <Typography color="textSecondary">
-             You clocked in at <Moment format={dateFormat}>{openShift.clockIn}</Moment>. 
-          </Typography>
-           <ClockOutModal btnText={"Ready to clock out?"} id={openShift._id} />
-        </ListItem>);
+           <SnackbarContent 
+           key={openShift._id + "snack"} 
+           id={openShift._id}
+           className={classes.snackbar} 
+           message={moment(openShift.clockIn).calendar(null, {
+             sameDay: '[You clocked in today at ] LT',
+             lastDay: '[You clocked in yesterday at ] LT', 
+             sameElse: '[You clocked in on] MM/DD/YYYY [at] LT',
+             lastWeek: '[You clocked in on] MM/DD/YYYY [at] LT',
+           })} 
+           action={<ClockOutModal btnText={"Ready to clock out?"} shiftId={openShift._id} />} 
+           />
+        );
     
     return (
-      <List component="nav" className={classes.root}>
+      <div>
         {shiftList}
-      </List>
+      </div>
     );
   }
 }
