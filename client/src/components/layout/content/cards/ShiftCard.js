@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '../../../common/CircularProgress';
 import EditShiftModal from '../shifts/EditShiftModal';
+import DeleteShiftModal from '../shifts/DeleteShiftModal';
 import ClockOutModal from '../shifts/ClockOutModal';
 import isEmpty from '../../../../validation/isEmpty';
 import Moment from 'react-moment';
@@ -36,10 +37,10 @@ class ShiftCard extends React.Component {
     if (loading) {
       workShiftCard = <CircularProgress />;
     } else if (isEmpty(workShifts)) {
-      workShiftCard = <span>No shifts to display yet</span>
+      workShiftCard = <span>No shifts to display</span>
     } else {
       workShiftCard = workShifts.map(workshift =>
-        <Card className={classes.card} key={workshift._id} id={workshift._id}>
+        <Card className={classes.card} key={workshift._id + "card"} id={workshift._id}>
           <CardContent>
             <List>
               <ListItem>
@@ -115,14 +116,17 @@ class ShiftCard extends React.Component {
             />
             {
               workshift.clockOut
-                ?
-                null
-                :
-                <ClockOutModal
-                  btnText={"Clock Out"}
-                  id={workshift._id}
-                />
+              ?
+              null
+              :
+              <ClockOutModal
+                btnText={"Clock Out"}
+                shiftId={workshift._id}
+              />
             }
+            <DeleteShiftModal
+              workshift={workshift}
+            />
           </CardActions>
         </Card>
       )   
