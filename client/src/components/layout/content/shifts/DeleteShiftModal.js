@@ -12,6 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
 import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 
 const styles = theme => ({
   paper: {
@@ -26,6 +27,13 @@ const styles = theme => ({
     backgroundColor: red[500],
     '&:hover': {
       backgroundColor: red[700],
+    },
+  },
+  cancelBtn: {
+    color: theme.palette.getContrastText(grey[500]),
+    backgroundColor: grey[500],
+    '&:hover': {
+      backgroundColor: grey[700],
     },
   },
   modal: {
@@ -184,7 +192,7 @@ class DeleteShiftModal extends React.Component {
             <Button
               variant="contained"
               color="primary"
-              className={classes.button}
+              className={classNames(classes.button, classes.cancelBtn)}
               fullWidth
               onClick={this.handleClose}
             >
