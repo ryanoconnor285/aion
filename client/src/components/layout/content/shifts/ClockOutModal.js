@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import { clockOut, getOpenShifts, getShifts } from '../../../../actions/shiftActions';
 import { Button, TextField, Typography, Modal } from '@material-ui/core';
+import blue from '@material-ui/core/colors/blue';
 
 
 const styles = theme => ({
@@ -24,7 +26,14 @@ const styles = theme => ({
   },
   button: {
     margin: '5px'
-  }
+  },
+  clockOutBtn: {
+    color: theme.palette.getContrastText(blue[500]),
+    backgroundColor: blue[500],
+    '&:hover': {
+      backgroundColor: blue[700],
+    },
+  },
 });
 
 class ClockOutModal extends React.Component {
@@ -65,7 +74,13 @@ class ClockOutModal extends React.Component {
 
     return (
       <div>
-        <Button color="primary" onClick={this.handleOpen}>{this.props.btnText}</Button>
+        <Button 
+          onClick={this.handleOpen}
+          className={classNames(classes.button, classes.clockOutBtn)}
+        >
+        {this.props.btnText}
+        </Button>
+
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
