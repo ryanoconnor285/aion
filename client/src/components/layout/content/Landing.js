@@ -8,6 +8,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import mainImage from '../../../images/action-asphalt-back-light-315938.jpg';
+import infoCard1 from '../../../images/abstract-astronomy-dark-924824.jpg';
+import infoCard2 from '../../../images/asphalt-blur-car-290470.jpg';
+import infoCard3 from '../../../images/action-blur-city-590701.jpg';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -60,13 +63,31 @@ class Landing extends React.Component {
             </Card>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <MediaCard />
+            <MediaCard 
+              image={infoCard1}
+              title={"ClockInTracking"}
+              headline={"Headline"}
+              info={"Short parahgraph describing the benefits"}
+              cardActionText={"Button Text"}
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <MediaCard />
+            <MediaCard 
+              image={infoCard2}
+              title={"ClockInTracking"}
+              headline={"Headline"}
+              info={"Short parahgraph describing the benefits"}
+              cardActionText={"Button Text"}
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <MediaCard />
+            <MediaCard 
+              image={infoCard3}
+              title={"ClockInTracking"}
+              headline={"Headline"}
+              info={"Short parahgraph describing the benefits"}
+              cardActionText={"Button Text"}
+            />
           </Grid>
         </Grid>
       </div>
