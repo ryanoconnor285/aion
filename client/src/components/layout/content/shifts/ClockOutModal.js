@@ -46,12 +46,12 @@ class ClockOutModal extends React.Component {
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
   handleClockOut = (id) => {
     const clockOutData = {
       clockOutDesc: this.state.clockOutDesc,
-      id: this.props.id
+      id: this.props.shiftId
     };
     this.props.clockOut(clockOutData);
     this.setState({ clockOutDesc: '' });
