@@ -40,12 +40,14 @@ export default function (state = initialState, action) {
     case DELETE_SHIFT:
       return {
         ...state,
-        workShifts: state.workShifts.filter(workShift => workShift._id !== action.payload)
+        workShifts: state.workShifts.filter(workShift => workShift._id !== action.payload),
+        openShifts: state.openShifts.filter(openShift => openShift._id !== action.payload),
       };
     case CLOCK_IN:
       return {
         ...state,
-        workShifts: [action.payload, ...state.workShifts]
+        workShifts: [action.payload, ...state.workShifts],
+        openShifts: [action.payload, ...state.openShifts]
       };
     case CLOCK_OUT:
       return {
