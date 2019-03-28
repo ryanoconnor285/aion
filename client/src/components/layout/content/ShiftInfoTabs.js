@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import RecentShiftsTable from './tables/RecentShiftsTable';
+import ShiftsTable from './tables/ShiftsTable';
 import ShiftCard from '../content/cards/ShiftCard';
 import isEmpty from '../../../validation/isEmpty';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
+
+// This component is rendered onto the Dashboard.  It displayed a content area with 3 tabs, Recent Shifts (default) - 5 most recent shifts, Open Shifts - notifies the user to manage any open shifts, Current Pay Period - displays the time card with total hours for the current pay period.   
 
 function TabContainer(props) {
   return (
@@ -61,6 +63,7 @@ class ShiftInfoTabs extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange} variant="fullWidth">
             <Tab label="Recent Shifts" />
+            {/* Badges show user how many open shifts the have*/}
             <Tab
               label={
                 <Badge className={classes.padding} color="secondary" badgeContent={openShiftCount}>
@@ -71,6 +74,8 @@ class ShiftInfoTabs extends React.Component {
             <Tab label="Current Pay Period" />
           </Tabs>
         </AppBar>
+
+        {/* Table has better utility but does not look good on mobile, this will conditionally render a card on mobile and a table on desktop*/}
         {value === 0 && 
           <TabContainer>
             {
@@ -78,10 +83,20 @@ class ShiftInfoTabs extends React.Component {
               ?
               <ShiftCard workShifts={workShifts} />
               :
-              <RecentShiftsTable workShifts={workShifts} /> 
+              <ShiftsTable workShifts={workShifts} /> 
             }
           </TabContainer>}
-        {value === 1 && <TabContainer><ShiftCard workShifts={openShifts} /></TabContainer>}
+        {/* Table has better utility but does not look good on mobile, this will conditionally render a card on mobile and a table on desktop*/}
+        {value === 1 && 
+          <TabContainer>
+            {
+              isMobile
+                ?
+              <ShiftCard workShifts={openShifts} />
+              :
+              <ShiftsTable workShifts={openShifts} />
+            }
+          </TabContainer>}
         {value === 2 && <TabContainer>Coming Soon</TabContainer>}
       </div>
     );
