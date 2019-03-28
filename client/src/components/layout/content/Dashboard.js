@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import isEmpty from '../../../validation/isEmpty';
+import Navbar from '../navigation/Navbar';
 import OpenShifts from './shifts/OpenShifts';
 import ShiftInfoTabs from './ShiftInfoTabs';
 import { Grid, Paper } from '@material-ui/core';
@@ -47,25 +48,28 @@ class Dashboard extends Component {
     const { workShift, classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Grid container spacing={8}>
-          <Grid item xs={12}>
-              {
-                isEmpty(workShift.openShifts) 
-                ? 
-                null 
-                : 
-                <Paper className={classes.paper}>
-                  <OpenShifts openShifts={workShift.openShifts} />
-                </Paper>
-              }
+      <div>
+        <Navbar />
+        <div className={classes.root}>
+          <Grid container spacing={8}>
+            <Grid item xs={12}>
+                {
+                  isEmpty(workShift.openShifts) 
+                  ? 
+                  null 
+                  : 
+                  <Paper className={classes.paper}>
+                    <OpenShifts openShifts={workShift.openShifts} />
+                  </Paper>
+                }
+            </Grid>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <ShiftInfoTabs workShifts={workShift.workShifts} openShifts={workShift.openShifts}/>
+              </Paper>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <ShiftInfoTabs workShifts={workShift.workShifts} openShifts={workShift.openShifts}/>
-            </Paper>
-          </Grid>
-        </Grid>
+        </div>
       </div>
     );
   }
