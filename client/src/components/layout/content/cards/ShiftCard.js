@@ -111,22 +111,33 @@ class ShiftCard extends React.Component {
             </List>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            <EditShiftModal
-              workshift={workshift}
-            />
-            {
-              workshift.clockOut
-              ?
-              null
-              :
-              <ClockOutModal
-                btnText={"Clock Out"}
-                shiftId={workshift._id}
-              />
-            }
-            <DeleteShiftModal
-              workshift={workshift}
-            />
+          <div className={classes.root}>
+            <Grid container spacing={8}>
+              <Grid item xs={12}>
+                {
+                  workshift.clockOut
+                  ?
+                  null
+                  :
+                  <ClockOutModal
+                    btnText={"Clock Out"}
+                    shiftId={workshift._id}
+                    fullWidth={true}
+                  />
+                }
+              </Grid>
+              <Grid item xs={6}>
+                <EditShiftModal
+                  workshift={workshift}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <DeleteShiftModal
+                  workshift={workshift}
+                />
+              </Grid>
+            </Grid>
+          </div>
           </CardActions>
         </Card>
       )   
