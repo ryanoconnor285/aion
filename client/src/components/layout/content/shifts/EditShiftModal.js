@@ -9,6 +9,7 @@ import { getShifts, editShift, deleteShift } from '../../../../actions/shiftActi
 import { Button, TextField, Typography, Modal } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 
 const styles = theme => ({
   paper: {
@@ -23,7 +24,7 @@ const styles = theme => ({
       width: '370 px'
     },
     [theme.breakpoints.up('md')]: {
-      width: theme.spacing.unit * 50,
+      width: '500px',
     },
   },
   deleteBtn: {
@@ -31,6 +32,13 @@ const styles = theme => ({
     backgroundColor: red[500],
     '&:hover': {
       backgroundColor: red[700],
+    },
+  },
+  cancelBtn: {
+    color: theme.palette.getContrastText(grey[500]),
+    backgroundColor: grey[500],
+    '&:hover': {
+      backgroundColor: grey[700],
     },
   },
   button: {
@@ -120,7 +128,7 @@ class EditShiftModal extends React.Component {
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
+          className={classNames(classes.button, classes.cancelBtn)}
           fullWidth
           onClick={() => {this.handleClose()}}
         >
@@ -143,7 +151,7 @@ class EditShiftModal extends React.Component {
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
+          className={classNames(classes.button, classes.cancelBtn)}
           fullWidth
           onClick={() => { this.handleToggle()}}
         >
@@ -154,15 +162,20 @@ class EditShiftModal extends React.Component {
 
     return (
       <div>
-        <Button variant="contained" color="secondary" className={classes.button}
-          onClick={this.handleOpen}>
+        <Button 
+          variant="contained" 
+          fullWidth
+          color="secondary" 
+          className={classes.button}
+          onClick={this.handleOpen}
+        >
           Edit
           <EditIcon className={classes.rightIcon} />
         </Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          className="modal"
+          className={classes.modal}
           open={this.state.open}
           onClose={this.handleClose}
         >
