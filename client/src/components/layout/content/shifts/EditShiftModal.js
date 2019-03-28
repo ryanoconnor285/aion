@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import isEmpty from '../../../../validation/isEmpty';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import { getShifts, editShift, deleteShift } from '../../../../actions/shiftActions';
 import { Button, TextField, Typography, Modal } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import red from '@material-ui/core/colors/red';
 
 const styles = theme => ({
   paper: {
@@ -22,6 +24,13 @@ const styles = theme => ({
     },
     [theme.breakpoints.up('md')]: {
       width: theme.spacing.unit * 50,
+    },
+  },
+  deleteBtn: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
     },
   },
   button: {
@@ -81,7 +90,7 @@ class EditShiftModal extends React.Component {
 
   handleDeleteShift = (id) => {
     this.props.deleteShift(id);
-    this.props.getShifts();
+    this.handleToggle();
     this.handleClose();
   }
 
@@ -102,7 +111,7 @@ class EditShiftModal extends React.Component {
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
+          className={classNames(classes.button, classes.deleteBtn)}
           fullWidth
           onClick={() => { this.handleToggle()}}
         >
@@ -125,9 +134,9 @@ class EditShiftModal extends React.Component {
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
+          className={classNames(classes.button, classes.deleteBtn)}
           fullWidth
-          onClick={() => {this.handleDeleteShift(this.props.id)}}
+          onClick={() => {this.handleDeleteShift(workshift._id)}}
         >
           Permanently Delete
         </Button>
