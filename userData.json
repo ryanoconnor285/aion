@@ -1,0 +1,58 @@
+{"_id":{"$oid":"5c9113cbe0a26a7c1a7494e9"},"timeStampAction":"+19192452001,10606#,,4182#,,1","firstName":"Ryan","lastName":"OConnor","email":"ryan@email.com","password":"$2a$10$fHhFYnEbEiyCxTAMSty6EO5T1hnDW6MYxOimglntXIAdZYwOyeTv.","date":{"$date":"2019-03-19T16:07:39.987Z"},"__v":0}
+{"_id":{"$oid":"5c9a2d27575c4d5dbac67f70"},"timeStampAction":"","firstName":"Donald","lastName":"Trump","email":"trump@email.com","password":"$2a$10$/hSocvLEWnoS15OrF2l.WOYtgjrmPPHfzbz6IJY7utOGyL9ZX.kuK","date":{"$date":"2019-03-26T13:46:15.412Z"},"__v":0}
+{
+  "_id": "5c9ff163939916e3312d1d56",
+  "firstName": "Miranda",
+  "lastName": "Buck",
+  "password": "abc123",
+  "email": "miranda.buck@email.com}"
+}
+{
+  "_id": "5c9ff1635d766c90a7af2461",
+  "firstName": "Swanson",
+  "lastName": "Dale",
+  "password": "abc123",
+  "email": "swanson.dale@email.com}"
+}
+{
+  "_id": "5c9ff163304abae5f2a452da",
+  "firstName": "Anastasia",
+  "lastName": "Henson",
+  "password": "abc123",
+  "email": "anastasia.henson@email.com}"
+}
+{
+  "_id": "5c9ff163ee4feb750ac17049",
+  "firstName": "Dorothea",
+  "lastName": "Duncan",
+  "password": "abc123",
+  "email": "dorothea.duncan@email.com}"
+}
+{
+  "_id": "5c9ff1633ecd1803abdb88ed",
+  "firstName": "Estes",
+  "lastName": "Whitley",
+  "password": "abc123",
+  "email": "estes.whitley@email.com}"
+}
+{
+  "_id": "5c9ff16302d5728860ea9668",
+  "firstName": "Schneider",
+  "lastName": "Burgess",
+  "password": "abc123",
+  "email": "schneider.burgess@email.com}"
+}
+{
+  "_id": "5c9ff163cd43e29d8269d52f",
+  "firstName": "Hopper",
+  "lastName": "Vincent",
+  "password": "abc123",
+  "email": "hopper.vincent@email.com}"
+}
+{
+  "_id": "5c9ff163385ddb882496ccca",
+  "firstName": "Elvia",
+  "lastName": "Carr",
+  "password": "abc123",
+  "email": "elvia.carr@email.com}"
+}
