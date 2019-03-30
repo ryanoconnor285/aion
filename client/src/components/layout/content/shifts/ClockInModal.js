@@ -99,6 +99,21 @@ class ClockInModal extends React.Component {
               margin="normal"
               onChange={this.onChange}
             />
+            {
+              auth.user.timeStampAction
+                ?
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  fullWidth
+                  href={"tel:" + auth.user.timeStampAction}
+                >
+                  Call Teletime
+              </Button>
+                :
+                null
+            }
             <Button
               variant="contained"
               color="primary"
@@ -108,21 +123,6 @@ class ClockInModal extends React.Component {
             >
               Clock In
             </Button>
-            {
-              auth.user.timeStampAction
-              ?
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                fullWidth 
-                href={"tel:" + auth.user.timeStampAction}
-              >
-                Call Teletime
-              </Button>
-              :
-              null
-            }
             <Button
               variant="contained"
               color="primary"
