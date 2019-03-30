@@ -123,10 +123,10 @@ class Landing extends React.Component {
             <Card className={classes.mainCard}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                  Aion is free to use, sign up is easy.  Let's get started.
+                  Aion is free to use and sign up is easy.  Let's get started.
                 </Typography>
                 <CardActions style={{ justifyContent: 'center' }}>
-                  <Button color="inherit" fullWidth component={Link} to="/register">
+                  <Button style={{ height: '50px', color:'white', background: 'linear-gradient(to right bottom, #ef6c00, #ff4081)' }} fullWidth component={Link} to="/register">
                     Register Now
                   </Button>
                 </CardActions>
