@@ -42,8 +42,8 @@ class Navbar extends React.Component {
 
     const guestLinks = (
       <div>
-        <Button color="inherit" component={Link} to="/login">Login</Button>
-        <Button color="inherit" component={Link} to="/register">Register</Button>
+        <Button color="primary" component={Link} to="/login">Login</Button>
+        <Button color="primary" component={Link} to="/register">Register</Button>
       </div>
     );
 
