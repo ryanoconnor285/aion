@@ -1,6 +1,5 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LandingAppBar from '../navigation/LandingAppBar';
 import mainImage from '../../../images/action-asphalt-back-light-315938.jpg';
@@ -9,9 +8,7 @@ import infoCard2 from '../../../images/asphalt-blur-car-290470.jpg';
 import infoCard3 from '../../../images/action-blur-city-590701.jpg';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
@@ -20,8 +17,13 @@ const styles = theme => ({
     width: '100%',
   },
   mainCardP: {
+    [theme.breakpoints.down('sm')]: {
+      width: 350
+    },
+    [theme.breakpoints.up('md')]: {
+      width: 500,
+    },
     margin: 'auto',
-    width: '50%',
   },
   mainCardActions: {
     margin: 'auto',
@@ -31,10 +33,12 @@ const styles = theme => ({
     width: '100%',
   },
   card: {
+    height: 545,
     maxWidth: '375',
   },
   media: {
-    height: 150,
+    marginTop: 6,
+    height: '60%',
   },
 });
 
@@ -60,15 +64,12 @@ class Landing extends React.Component {
                   Aion
                 </Typography>
                 <Typography className={classes.mainCardP} component="p">
-                  Clock in, clock out, how hard could it be?  Aion can help you keep track of the amount of time you work even if your employer is using another system to track time.  Your record  is easy to use and easy to access anywhere and anytime, mobile or desktop.  
+                  Clock in, clock out, how hard could it be?  Aion can help you keep track of the amount of time you work even you are self employed or your employer is using another system to track time.  Your record  is easy to use and easy to access anywhere and anytime, mobile or desktop.  
                 </Typography>
               </CardContent>
-              <CardActions className={classes.mainCardActions}>
-                <Button color="inherit" component={Link} to="/register">Register</Button>
-              </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} md={4}>
             <Card className={classes.card}>
               <img
                 className={classes.media}
@@ -80,15 +81,12 @@ class Landing extends React.Component {
                   Mobile Friendly
                 </Typography>
                 <Typography component="p">
-                  This app is designed to be used on mobile to help you quickly keep track of your time from anywhere.  It also works great on desktop with easy to read tables.
+                  This application is designed to be used on mobile to help you quickly keep track of your time from anywhere.  It also works great on desktop with easy to read tables.
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button color="inherit" component={Link} to="/register">Register</Button>
-              </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} md={4}>
             <Card className={classes.card}>
               <img
                 className={classes.media}
@@ -99,16 +97,13 @@ class Landing extends React.Component {
                 <Typography gutterBottom variant="h5" component="h2">
                   Intuitive
                 </Typography>
-                <Typography component="p">
-                  This app intuitively presents you with the information and actions you need to make tracking easy.  When you are clocked in, for example, you will be prompted to clock out the next time you use the app.  
+                  <Typography component="p">
+                  Aion intuitively presents you with the information and actions you need to make tracking easy.  When you are clocked in, for example, you will be prompted to clock out the next time you log in.  
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button color="inherit" component={Link} to="/register">Register</Button>
-              </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} md={4}>
             <Card className={classes.card}>
               <img
                 className={classes.media}
@@ -120,12 +115,9 @@ class Landing extends React.Component {
                   Built Around You
                 </Typography>
                 <Typography component="p">
-                  Let Aion make time tracking simple and easy for you.  You can quickly record shifts, billable hours, or even time spent on a project.  If you work 8, 12 or even 24 hours Aion can easily help you see .  
+                  Let Aion make time tracking simple and easy for you.  You can quickly record shifts, billable hours, or even time spent on a project.  Aion works great for any duration even if you work past midnight, holdiays or weekends.      
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button color="inherit" component={Link} to="/register">Register</Button>
-              </CardActions>
             </Card>
           </Grid>
         </Grid>
