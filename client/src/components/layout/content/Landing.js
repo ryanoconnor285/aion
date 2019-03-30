@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import LandingAppBar from '../navigation/LandingAppBar';
@@ -7,8 +8,10 @@ import infoCard1 from '../../../images/adult-agreement-beard-541522.jpg';
 import infoCard2 from '../../../images/asphalt-blur-car-290470.jpg';
 import infoCard3 from '../../../images/action-blur-city-590701.jpg';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
@@ -52,8 +55,7 @@ class Landing extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <div className={classes.root}>
+      <div className={classes.root}>
         <LandingAppBar />
         <Grid container spacing={24}>
           <Grid item xs={12}>
@@ -120,8 +122,21 @@ class Landing extends React.Component {
               </CardContent>
             </Card>
           </Grid>
+          <Grid item xs={12} >
+            <Card className={classes.mainCard}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Aion is free to use, sign up is easy.  Let's get started.
+                </Typography>
+                <CardActions>
+                  <Button color="inherit" component={Link} to="/register">
+                    Register Now
+                  </Button>
+                </CardActions>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </div>
       </div>
     );
   }
