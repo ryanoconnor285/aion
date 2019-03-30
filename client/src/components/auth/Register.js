@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../style/register.css';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
@@ -78,16 +79,6 @@ class Register extends Component {
           <span>{errors.lastName ? errors.lastName : null}</span>
           <p>
             <input
-              placeholder="Time Stamp Action"
-              name="timeStampAction"
-              type="text"
-              value={this.state.timeStampAction}
-              onChange={this.onChange}
-            />
-          </p>
-          <small>If you clock in by calling a phone number enter it here, otherwise leave it blank</small>
-          <p>
-            <input
               placeholder="Email"
               name="email"
               type="email"
@@ -118,7 +109,14 @@ class Register extends Component {
           </p>
           <span>{errors.confirmPassword ? errors.confirmPassword : null}</span>
           <span>{errors.emailExists ? errors.emailExists : null}</span>
-          <input type="submit" className="sumbit-btn" value="Register"/>
+          <Button
+            style={{ color: 'white', backgroundColor: '#2196f3' }}
+            fullWidth
+            type="submit"
+            onClick={this.onSubmit}
+          >
+            Register
+          </Button>
         </form>
       </div>
     );
