@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import { loginUser } from '../../actions/authActions';
 import '../../style/login.css'
 
@@ -72,7 +73,16 @@ class Login extends Component {
             />
           </p>
           <span>{errors.password ? errors.password : null}</span>
-          <p><input type="submit" value="Login" /></p>
+          <p>
+            <Button 
+              style={{ color: 'white', backgroundColor: '#2196f3' }}
+              fullWidth 
+              type="submit" 
+              onClick={this.onSubmit}
+            >
+              Login
+            </Button>
+          </p>
         </form>
       </div>
     );
