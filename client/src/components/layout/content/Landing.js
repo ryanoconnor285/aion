@@ -28,9 +28,6 @@ const styles = theme => ({
     },
     margin: 'auto',
   },
-  mainCardActions: {
-    margin: 'auto',
-  },
   mainMedia: {
     marginTop: -50,
     width: '100%',
@@ -57,10 +54,10 @@ class Landing extends React.Component {
     return (
       <div className={classes.root}>
         <LandingAppBar />
-        <Grid container spacing={24}>
+        <Grid container justify="center" spacing={24}>
           <Grid item xs={12}>
             <Card className={classes.mainCard}>
-              <img src={mainImage} className={classes.mainMedia} alt="time-lapse"/>
+              <img src={mainImage} style={{ marginTop: -50, width: '100%' }} alt="time-lapse"/>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Aion
@@ -122,14 +119,14 @@ class Landing extends React.Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} >
+          <Grid item xs={12} sm={4}>
             <Card className={classes.mainCard}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Aion is free to use, sign up is easy.  Let's get started.
                 </Typography>
-                <CardActions>
-                  <Button color="inherit" component={Link} to="/register">
+                <CardActions style={{ justifyContent: 'center' }}>
+                  <Button color="inherit" fullWidth component={Link} to="/register">
                     Register Now
                   </Button>
                 </CardActions>
