@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getShifts } from '../../../../actions/shiftActions';
-import { withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import ShiftsTable from './ShiftsTable';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
-const styles = theme => ({
-});
 
 class PayPeriod extends Component {
   constructor() {
@@ -24,7 +20,6 @@ class PayPeriod extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     //This is the first know pay period start date, it is selected arbitrarily 
     const payPeriodStart = 1551502800000;
     let payPeriodsPast = Math.floor((moment().diff(payPeriodStart, 'days'))/14);
@@ -51,7 +46,6 @@ PayPeriod.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
   getShifts: PropTypes.func.isRequired,
 };
 
@@ -61,4 +55,4 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { getShifts })(withStyles(styles)(PayPeriod));
+export default connect(mapStateToProps, { getShifts })(PayPeriod);
