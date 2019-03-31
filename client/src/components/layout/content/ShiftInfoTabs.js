@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ShiftsTable from './tables/ShiftsTable';
+import PayPeriod from './tables/PayPeriod';
 import ShiftCard from '../content/cards/ShiftCard';
 import isEmpty from '../../../validation/isEmpty';
 import AppBar from '@material-ui/core/AppBar';
@@ -97,7 +98,7 @@ class ShiftInfoTabs extends React.Component {
               <ShiftsTable workShifts={openShifts} />
             }
           </TabContainer>}
-        {value === 2 && <TabContainer>Coming Soon</TabContainer>}
+        {value === 2 && <TabContainer><PayPeriod /></TabContainer>}
       </div>
     );
   }
