@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from '../../../../validation/isEmpty';
 import CircularProgress from '../../../common/CircularProgress';
-import { getOpenShifts, getShifts } from '../../../../actions/shiftActions';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,15 +34,6 @@ class ShiftsTable extends React.Component {
     super();
     this.state = {
       clockOutDesc: '',
-    }
-  }
-  
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-    if (nextProps.workShift) {
-      this.setState({ workShift: nextProps.workShift });
     }
   }
 
@@ -101,7 +91,6 @@ class ShiftsTable extends React.Component {
               </TableCell>
               <TableCell>
                 <EditShiftModal
-                  id={workshift._id}
                   workshift={workshift}
                 />
               </TableCell>
@@ -123,8 +112,6 @@ ShiftsTable.propTypes = {
   auth: PropTypes.object.isRequired,
   workShift: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  getShifts: PropTypes.func.isRequired,
-  getOpenShifts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -132,5 +119,5 @@ const mapStateToProps = state => ({
   workShift: state.workShift
 });
 
-export default connect(mapStateToProps, { getShifts, getOpenShifts })(withStyles(styles)(ShiftsTable));
+export default connect(mapStateToProps)(withStyles(styles)(ShiftsTable));
 
