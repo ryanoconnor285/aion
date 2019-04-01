@@ -5,7 +5,6 @@ import { getShifts, getOpenShifts } from '../../../actions/shiftActions';
 import { withStyles } from '@material-ui/core/styles';
 import isEmpty from '../../../validation/isEmpty';
 import Navbar from '../navigation/Navbar';
-import PayPeriod from './tables/PayPeriod';
 import OpenShifts from './shifts/OpenShifts';
 import ShiftInfoTabs from './ShiftInfoTabs';
 import { Grid, Paper } from '@material-ui/core';
@@ -66,7 +65,6 @@ class Dashboard extends Component {
             </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <PayPeriod />
                 <ShiftInfoTabs workShifts={workShift.workShifts} openShifts={workShift.openShifts}/>
               </Paper>
             </Grid>
