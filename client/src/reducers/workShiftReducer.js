@@ -52,8 +52,6 @@ export default function (state = initialState, action) {
     case CLOCK_OUT:
       return {
         ...state,
-        workShifts: [action.payload, ...state.workShifts],
-        openShifts: state.openShifts.filter(openShift => openShift._id !== action.payload)
       };
     default:
       return state;
