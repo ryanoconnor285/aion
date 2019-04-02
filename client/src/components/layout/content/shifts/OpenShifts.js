@@ -27,7 +27,7 @@ class OpenShift extends React.Component {
       openShifts
        .map(openShift => 
            <SnackbarContent 
-           key={openShift._id + "snack"} 
+           key={openShift._id} 
            id={openShift._id}
            className={classes.snackbar} 
            message={moment(openShift.clockIn).calendar(null, {
