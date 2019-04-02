@@ -59,7 +59,7 @@ class ShiftsTable extends React.Component {
         </TableHead>
         <TableBody>
           {workShifts.map(workshift =>
-            <TableRow className={classes.tableRow} key={workshift._id + "table"} id={workshift._id}>
+            <TableRow className={classes.tableRow} key={workshift._id} id={workshift._id}>
               <TableCell>
                 <Moment format={dateFormat}>
                   {workshift.clockIn}
@@ -74,7 +74,7 @@ class ShiftsTable extends React.Component {
                   ?
                   <Moment format={dateFormat}>{workshift.clockOut}</Moment>
                   :
-                  <ClockOutModal btnText={"Clock Out"} id={workshift._id} />
+                  <ClockOutModal btnText={"Clock Out"} shiftId={workshift._id} />
                 }
               </TableCell>
               <TableCell>
