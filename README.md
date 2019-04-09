@@ -5,6 +5,21 @@ This a timekeeping app designed to help you keep track of clocking in and clocki
 ## Deployed Here
 [Aion](https://aion-mern.herokuapp.com/)
 
+
+## Technologies Leveraged
+* Javascript ES6
+* React 16.8
+* Redux
+* Axios
+* Node JS
+* Express
+* Mongoose
+* Material UI
+* Custom CSS
+* Moment JS
+* MVC model
+* RESTful APIs
+
 ## Getting Started
 
 As always, you should have a folder on your machine for repositories.  Once in that directory
