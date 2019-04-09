@@ -2,6 +2,9 @@
 
 This a timekeeping app designed to help you keep track of clocking in and clocking out of work.  This app is great for anyone who has to deal with a slow system at their current job.  It is also great if you work remotely or if you are self employed and you want to show how much time you spent with a client.  
 
+##Deployed Here
+(https://aion-mern.herokuapp.com/)
+
 ## Getting Started
 
 As always, you should have a folder on your machine for repositories.  Once in that directory
